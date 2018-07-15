@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<meta name="generator" content="Hugo 0.41" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400|Old+Standard+TT:400' rel='stylesheet' type='text/css'>
+
+    <link rel="icon" type="image/png" href="https://www.example.com/favicon_16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="https://www.example.com/favicon_32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://www.example.com/favicon_128x128.png" sizes="128x128">
+
+    <title>
+      
+      
+         reorchestrate 
+      
+    </title>
+    <link rel="canonical" href="https://www.example.com/">
+
+    <style>
+  * {
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    vertical-align: baseline;
+    margin: 0;
+    padding: 0;
+    color: black;
+    text-decoration-skip: ink;
+  }
+
+  body {
+    font-family: 'Open Sans', 'Myriad Pro', Myriad, sans-serif;
+    font-size: 17px;
+    line-height: 160%;
+    color: #1d1313;
+    max-width: 700px;
+    margin: auto;
+  }
+
+  p {
+    margin: 20px 0;
+  }
+
+  a img {
+    border: none;
+  }
+
+  img {
+    margin: 10px auto 10px auto;
+    max-width: 100%;
+    display: block;
+  }
+
+  .left-justify {
+    float: left;
+  }
+
+  .right-justify {
+    float: right;
+  }
+
+  pre,
+  code {
+    font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    background-color: #f7f7f7;
+  }
+
+  code {
+    font-size: 12px;
+    padding: 4px;
+  }
+
+  pre {
+    margin-top: 0;
+    margin-bottom: 16px;
+    word-wrap: normal;
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+  }
+
+  pre>code {
+    padding: 0;
+    margin: 0;
+    font-size: 100%;
+    word-break: normal;
+    white-space: pre;
+    background: transparent;
+    border: 0;
+  }
+
+  pre code {
+    display: inline;
+    max-width: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    line-height: inherit;
+    word-wrap: normal;
+    background-color: transparent;
+    border: 0;
+  }
+
+  pre code::before,
+  pre code::after {
+    content: normal;
+  }
+
+  em,
+  q,
+  em,
+  dfn {
+    font-style: italic;
+  }
+
+  .sans,
+  html .gist .gist-file .gist-meta {
+    font-family: "Open Sans", "Myriad Pro", Myriad, sans-serif;
+  }
+
+  .mono,
+  pre,
+  code,
+  tt,
+  p code,
+  li code {
+    font-family: Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace;
+  }
+
+  .heading,
+  .serif,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-family: "Old Standard TT", serif;
+  }
+
+  strong {
+    font-weight: 600;
+  }
+
+  q:before {
+    content: "\201C";
+  }
+
+  q:after {
+    content: "\201D";
+  }
+
+  del,
+  s {
+    text-decoration: line-through;
+  }
+
+  blockquote {
+    font-family: "Old Standard TT", serif;
+    text-align: center;
+    padding: 50px;
+  }
+
+  blockquote p {
+    display: inline-block;
+    font-style: italic;
+  }
+
+  blockquote:before,
+  blockquote:after {
+    font-family: "Old Standard TT", serif;
+    content: '\201C';
+    font-size: 35px;
+    color: #403c3b;
+  }
+
+  blockquote:after {
+    content: '\201D';
+  }
+
+  hr {
+    width: 40%;
+    height: 1px;
+    background: #403c3b;
+    margin: 25px auto;
+  }
+
+  h1 {
+    font-size: 35px;
+  }
+
+  h2 {
+    font-size: 28px;
+  }
+
+  h3 {
+    font-size: 22px;
+    margin-top: 28px;
+  }
+
+  h4 {
+    font-size: 18px;
+    margin-top: 18px;
+  }
+
+  h5 {
+    font-size: 18px;
+    margin-top: 18px;
+  }
+
+  h1 a,
+  h2 a,
+  h3 a,
+  h4 a,
+  h5 a {
+    text-decoration: none;
+  }
+
+  h1,
+  h2 {
+    margin-top: 28px;
+  }
+
+  #sub-header,
+  time {
+    color: #403c3b;
+    font-size: 13px;
+  }
+
+  #sub-header {
+    margin: 0 4px;
+  }
+
+  #nav h1 a {
+    font-size: 35px;
+    color: #1d1313;
+    line-height: 120%;
+  }
+
+  .posts_listing a,
+  #nav a {
+    text-decoration: none;
+  }
+
+  li {
+    margin-left: 20px;
+  }
+
+  ul li {
+    margin-left: 5px;
+  }
+
+  ul li {
+    list-style-type: none;
+  }
+
+  ul li:before {
+    content: "\00BB \0020";
+  }
+
+  #nav ul li:before,
+  .posts_listing li:before {
+    content: '';
+    margin-right: 0;
+  }
+
+  #content {
+    text-align: left;
+    width: 100%;
+    font-size: 15px;
+    padding: 60px 0 80px;
+  }
+
+  #content h1,
+  #content h2 {
+    margin-bottom: 5px;
+  }
+
+  #content h2 {
+    font-size: 25px;
+  }
+
+  #content .entry-content {
+    margin-top: 15px;
+  }
+
+  #content time {
+    margin-left: 3px;
+  }
+
+  #content h1 {
+    font-size: 30px;
+  }
+
+  .highlight {
+    margin: 10px 0;
+  }
+
+  .posts_listing {
+    margin: 0 0 50px;
+  }
+
+  .posts_listing li {
+    margin: 0 0 25px 15px;
+  }
+
+  .posts_listing li a:hover,
+  #nav a:hover {
+    text-decoration: underline;
+  }
+
+  #nav {
+    text-align: center;
+    position: static;
+    margin-top: 60px;
+  }
+
+  #nav ul {
+    display: table;
+    margin: 8px auto 0 auto;
+  }
+
+  #nav li {
+    list-style-type: none;
+    display: table-cell;
+    font-size: 15px;
+    padding: 0 20px;
+  }
+
+  #links {
+    margin: 50px 0 0 0;
+  }
+
+  #links :nth-child(2) {
+    float: right;
+  }
+
+  #not-found {
+    text-align: center;
+  }
+
+  #not-found a {
+    font-family: "Old Standard TT", serif;
+    font-size: 200px;
+    text-decoration: none;
+    display: inline-block;
+    padding-top: 225px;
+  }
+
+  @media (max-width: 750px) {
+    body {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    #nav h1 a {
+      font-size: 28px;
+    }
+
+    #nav li {
+      font-size: 13px;
+      padding: 0 15px;
+    }
+
+    #content {
+      margin-top: 0;
+      padding-top: 50px;
+      font-size: 14px;
+    }
+
+    #content h1 {
+      font-size: 25px;
+    }
+
+    #content h2 {
+      font-size: 22px;
+    }
+
+    .posts_listing li div {
+      font-size: 12px;
+    }
+  }
+
+  @media (max-width: 400px) {
+    body {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    #nav h1 a {
+      font-size: 22px;
+    }
+
+    #nav li {
+      font-size: 12px;
+      padding: 0 10px;
+    }
+
+    #content {
+      margin-top: 0;
+      padding-top: 20px;
+      font-size: 12px;
+    }
+
+    #content h1 {
+      font-size: 20px;
+    }
+
+    #content h2 {
+      font-size: 18px;
+    }
+
+    .posts_listing li div {
+      font-size: 12px;
+    }
+  }
+
+   
+
+  .chroma {
+    background-color: #f0f0f0
+  }
+
+   
+
+  .chroma .err {}
+
+   
+
+  .chroma .lntd {
+    vertical-align: top;
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+
+   
+
+  .chroma .lntable {
+    border-spacing: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    width: auto;
+    overflow: auto;
+    display: block;
+  }
+
+   
+
+  .chroma .hl {
+    display: block;
+    width: 100%;
+    background-color: #ffffcc
+  }
+
+   
+
+  .chroma .lnt {
+    margin-right: 0.4em;
+    padding: 0 0.4em 0 0.4em;
+  }
+
+   
+
+  .chroma .ln {
+    margin-right: 0.4em;
+    padding: 0 0.4em 0 0.4em;
+  }
+
+   
+
+  .chroma .k {
+    color: #007020;
+    font-weight: bold
+  }
+
+   
+
+  .chroma .kc {
+    color: #007020;
+    font-weight: bold
+  }
+
+   
+
+  .chroma .kd {
+    color: #007020;
+    font-weight: bold
+  }
+
+   
+
+  .chroma .kn {
+    color: #007020;
+    font-weight: bold
+  }
+
+   
+
+  .chroma .kp {
+    color: #007020
+  }
+
+   
+
+  .chroma .kr {
+    color: #007020;
+    font-weight: bold
+  }
+
+   
+
+  .chroma .kt {
+    color: #902000
+  }
+
+   
+
+  .chroma .na {
+    color: #4070a0
+  }
+
+   
+
+  .chroma .nb {
+    color: #007020
+  }
+
+   
+
+  .chroma .nc {
+    color: #0e84b5;
+    font-weight: bold
+  }
+
+   
+
+  .chroma .no {
+    color: #60add5
+  }
+
+   
+
+  .chroma .nd {
+    color: #555555;
+    font-weight: bold
+  }
+
+   
+
+  .chroma .ni {
+    color: #d55537;
+    font-weight: bold
+  }
+
+   
+
+  .chroma .ne {
+    color: #007020
+  }
+
+   
+
+  .chroma .nf {
+    color: #06287e
+  }
+
+   
+
+  .chroma .nl {
+    color: #002070;
+    font-weight: bold
+  }
+
+   
+
+  .chroma .nn {
+    color: #0e84b5;
+    font-weight: bold
+  }
+
+   
+
+  .chroma .nt {
+    color: #062873;
+    font-weight: bold
+  }
+
+   
+
+  .chroma .nv {
+    color: #bb60d5
+  }
+
+   
+
+  .chroma .s {
+    color: #4070a0
+  }
+
+   
+
+  .chroma .sa {
+    color: #4070a0
+  }
+
+   
+
+  .chroma .sb {
+    color: #4070a0
+  }
+
+   
+
+  .chroma .sc {
+    color: #4070a0
+  }
+
+   
+
+  .chroma .dl {
+    color: #4070a0
+  }
+
+   
+
+  .chroma .sd {
+    color: #4070a0;
+    font-style: italic
+  }
+
+   
+
+  .chroma .s2 {
+    color: #4070a0
+  }
+
+   
+
+  .chroma .se {
+    color: #4070a0;
+    font-weight: bold
+  }
+
+   
+
+  .chroma .sh {
+    color: #4070a0
+  }
+
+   
+
+  .chroma .si {
+    color: #70a0d0;
+    font-style: italic
+  }
+
+   
+
+  .chroma .sx {
+    color: #c65d09
+  }
+
+   
+
+  .chroma .sr {
+    color: #235388
+  }
+
+   
+
+  .chroma .s1 {
+    color: #4070a0
+  }
+
+   
+
+  .chroma .ss {
+    color: #517918
+  }
+
+   
+
+  .chroma .m {
+    color: #40a070
+  }
+
+   
+
+  .chroma .mb {
+    color: #40a070
+  }
+
+   
+
+  .chroma .mf {
+    color: #40a070
+  }
+
+   
+
+  .chroma .mh {
+    color: #40a070
+  }
+
+   
+
+  .chroma .mi {
+    color: #40a070
+  }
+
+   
+
+  .chroma .il {
+    color: #40a070
+  }
+
+   
+
+  .chroma .mo {
+    color: #40a070
+  }
+
+   
+
+  .chroma .o {
+    color: #666666
+  }
+
+   
+
+  .chroma .ow {
+    color: #007020;
+    font-weight: bold
+  }
+
+   
+
+  .chroma .c {
+    color: #60a0b0;
+    font-style: italic
+  }
+
+   
+
+  .chroma .ch {
+    color: #60a0b0;
+    font-style: italic
+  }
+
+   
+
+  .chroma .cm {
+    color: #60a0b0;
+    font-style: italic
+  }
+
+   
+
+  .chroma .c1 {
+    color: #60a0b0;
+    font-style: italic
+  }
+
+   
+
+  .chroma .cs {
+    color: #60a0b0;
+    background-color: #fff0f0
+  }
+
+   
+
+  .chroma .cp {
+    color: #007020
+  }
+
+   
+
+  .chroma .cpf {
+    color: #007020
+  }
+
+   
+
+  .chroma .gd {
+    color: #a00000
+  }
+
+   
+
+  .chroma .ge {
+    font-style: italic
+  }
+
+   
+
+  .chroma .gr {
+    color: #ff0000
+  }
+
+   
+
+  .chroma .gh {
+    color: #000080;
+    font-weight: bold
+  }
+
+   
+
+  .chroma .gi {
+    color: #00a000
+  }
+
+   
+
+  .chroma .go {
+    color: #888888
+  }
+
+   
+
+  .chroma .gp {
+    color: #c65d09;
+    font-weight: bold
+  }
+
+   
+
+  .chroma .gs {
+    font-weight: bold
+  }
+
+   
+
+  .chroma .gu {
+    color: #800080;
+    font-weight: bold
+  }
+
+   
+
+  .chroma .gt {
+    color: #0044dd
+  }
+
+   
+
+  .chroma .w {
+    color: #bbbbbb
+  }
+</style>
+
+    
+      <link href="https://www.example.com/index.xml" rel="alternate" type="application/rss+xml" title="reorchestrate" />
+    
+  </head>
+
+  <body>
+    <section id=nav>
+      <h1><a href="https://www.example.com/">reorchestrate</a></h1>
+      <ul>
+        
+      </ul>
+    </section>
+
+
+<section id=content>
+  <ul class=posts_listing>
+    
+    <li>
+      <h2>
+        <a href="https://www.example.com/posts/using-apache-spark-neural-networks-to-recognise-digits/">Using Apache Spark Neural Networks to Recognise Digits</a>
+      </h2>
+      <div id=date>
+        <time>12 March 2016</time>
+      </div>
+    </li>
+    
+    <li>
+      <h2>
+        <a href="https://www.example.com/posts/affinetransform-transformer-for-apache-spark-ml/">AffineTransform Transformer for Apache Spark ML</a>
+      </h2>
+      <div id=date>
+        <time>6 March 2016</time>
+      </div>
+    </li>
+    
+    <li>
+      <h2>
+        <a href="https://www.example.com/posts/date-hierarchy-for-neo4j/">A Date Hierarchy for Neo4j</a>
+      </h2>
+      <div id=date>
+        <time>27 February 2016</time>
+      </div>
+    </li>
+    
+    <li>
+      <h2>
+        <a href="https://www.example.com/posts/a-better-binarizer-for-apache-spark-ml/">A better Binarizer for Apache Spark ML</a>
+      </h2>
+      <div id=date>
+        <time>16 January 2016</time>
+      </div>
+    </li>
+    
+    <li>
+      <h2>
+        <a href="https://www.example.com/posts/porter-stemming-in-apache-spark-ml/">Porter Stemming in Apache Spark ML</a>
+      </h2>
+      <div id=date>
+        <time>13 December 2015</time>
+      </div>
+    </li>
+    
+    <li>
+      <h2>
+        <a href="https://www.example.com/posts/natural-language-processing-with-apache-spark-ml-and-amazon-reviews-part-2/">Natural Language Processing with Apache Spark ML and Amazon Reviews (Part 2)</a>
+      </h2>
+      <div id=date>
+        <time>6 December 2015</time>
+      </div>
+    </li>
+    
+    <li>
+      <h2>
+        <a href="https://www.example.com/posts/natural-language-processing-with-apache-spark-ml-and-amazon-reviews-part-1/">Natural Language Processing with Apache Spark ML and Amazon Reviews (Part 1)</a>
+      </h2>
+      <div id=date>
+        <time>5 December 2015</time>
+      </div>
+    </li>
+    
+    <li>
+      <h2>
+        <a href="https://www.example.com/posts/performance-tuning-spark-pagerank/">Performance Tuning Spark WikiPedia PageRank</a>
+      </h2>
+      <div id=date>
+        <time>21 November 2015</time>
+      </div>
+    </li>
+    
+    <li>
+      <h2>
+        <a href="https://www.example.com/posts/computing-wikipedias-internal-pagerank-with-spark/">Computing WikiPedia&#39;s internal PageRank with Apache Spark</a>
+      </h2>
+      <div id=date>
+        <time>14 November 2015</time>
+      </div>
+    </li>
+    
+  </ul>
+</section>
+
+  
+</body>
+</html>
