@@ -2,39 +2,39 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on reorchestrate</title>
-    <link>https://www.example.com/tags/</link>
+    <link>https://seddonm1.github.io/tags/</link>
     <description>Recent content in Tags on reorchestrate</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Sat, 12 Mar 2016 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://www.example.com/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://seddonm1.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Development</title>
-      <link>https://www.example.com/tags/development/</link>
+      <link>https://seddonm1.github.io/tags/development/</link>
       <pubDate>Sat, 12 Mar 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://www.example.com/tags/development/</guid>
+      <guid>https://seddonm1.github.io/tags/development/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Neo4j</title>
-      <link>https://www.example.com/tags/neo4j/</link>
+      <link>https://seddonm1.github.io/tags/neo4j/</link>
       <pubDate>Sat, 27 Feb 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://www.example.com/tags/neo4j/</guid>
+      <guid>https://seddonm1.github.io/tags/neo4j/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Spark</title>
-      <link>https://www.example.com/tags/spark/</link>
+      <link>https://seddonm1.github.io/tags/spark/</link>
       <pubDate>Sat, 12 Mar 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://www.example.com/tags/spark/</guid>
+      <guid>https://seddonm1.github.io/tags/spark/</guid>
       <description></description>
     </item>
     

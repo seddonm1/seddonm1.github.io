@@ -3,87 +3,87 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://www.example.com/posts/using-apache-spark-neural-networks-to-recognise-digits/</loc>
+    <loc>https://seddonm1.github.io/posts/using-apache-spark-neural-networks-to-recognise-digits/</loc>
     <lastmod>2016-03-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.example.com/posts/affinetransform-transformer-for-apache-spark-ml/</loc>
+    <loc>https://seddonm1.github.io/posts/affinetransform-transformer-for-apache-spark-ml/</loc>
     <lastmod>2016-03-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.example.com/posts/date-hierarchy-for-neo4j/</loc>
+    <loc>https://seddonm1.github.io/posts/date-hierarchy-for-neo4j/</loc>
     <lastmod>2016-02-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.example.com/posts/a-better-binarizer-for-apache-spark-ml/</loc>
+    <loc>https://seddonm1.github.io/posts/a-better-binarizer-for-apache-spark-ml/</loc>
     <lastmod>2016-01-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.example.com/posts/porter-stemming-in-apache-spark-ml/</loc>
+    <loc>https://seddonm1.github.io/posts/porter-stemming-in-apache-spark-ml/</loc>
     <lastmod>2015-12-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.example.com/posts/natural-language-processing-with-apache-spark-ml-and-amazon-reviews-part-2/</loc>
+    <loc>https://seddonm1.github.io/posts/natural-language-processing-with-apache-spark-ml-and-amazon-reviews-part-2/</loc>
     <lastmod>2015-12-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.example.com/posts/natural-language-processing-with-apache-spark-ml-and-amazon-reviews-part-1/</loc>
+    <loc>https://seddonm1.github.io/posts/natural-language-processing-with-apache-spark-ml-and-amazon-reviews-part-1/</loc>
     <lastmod>2015-12-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.example.com/posts/performance-tuning-spark-pagerank/</loc>
+    <loc>https://seddonm1.github.io/posts/performance-tuning-spark-pagerank/</loc>
     <lastmod>2015-11-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.example.com/posts/computing-wikipedias-internal-pagerank-with-spark/</loc>
+    <loc>https://seddonm1.github.io/posts/computing-wikipedias-internal-pagerank-with-spark/</loc>
     <lastmod>2015-11-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.example.com/categories/</loc>
+    <loc>https://seddonm1.github.io/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://www.example.com/tags/development/</loc>
+    <loc>https://seddonm1.github.io/tags/development/</loc>
     <lastmod>2016-03-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://www.example.com/tags/neo4j/</loc>
+    <loc>https://seddonm1.github.io/tags/neo4j/</loc>
     <lastmod>2016-02-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://www.example.com/posts/</loc>
+    <loc>https://seddonm1.github.io/posts/</loc>
     <lastmod>2016-03-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://www.example.com/tags/spark/</loc>
+    <loc>https://seddonm1.github.io/tags/spark/</loc>
     <lastmod>2016-03-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://www.example.com/tags/</loc>
+    <loc>https://seddonm1.github.io/tags/</loc>
     <lastmod>2016-03-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://www.example.com/</loc>
+    <loc>https://seddonm1.github.io/</loc>
     <lastmod>2016-03-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>

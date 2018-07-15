@@ -11,9 +11,9 @@
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400|Old+Standard+TT:400' rel='stylesheet' type='text/css'>
 
-    <link rel="icon" type="image/png" href="https://www.example.com/favicon_16x16.png" sizes="16x16">
-    <link rel="icon" type="image/png" href="https://www.example.com/favicon_32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="https://www.example.com/favicon_128x128.png" sizes="128x128">
+    <link rel="icon" type="image/png" href="https://seddonm1.github.io/favicon_16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="https://seddonm1.github.io/favicon_32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://seddonm1.github.io/favicon_128x128.png" sizes="128x128">
 
     <title>
       
@@ -21,7 +21,7 @@
          Natural Language Processing with Apache Spark ML and Amazon Reviews (Part 1) 
       
     </title>
-    <link rel="canonical" href="https://www.example.com/posts/natural-language-processing-with-apache-spark-ml-and-amazon-reviews-part-1/">
+    <link rel="canonical" href="https://seddonm1.github.io/posts/natural-language-processing-with-apache-spark-ml-and-amazon-reviews-part-1/">
 
     <style>
   * {
@@ -864,7 +864,7 @@
 
   <body>
     <section id=nav>
-      <h1><a href="https://www.example.com/">reorchestrate</a></h1>
+      <h1><a href="https://seddonm1.github.io/">reorchestrate</a></h1>
       <ul>
         
       </ul>
@@ -977,7 +977,7 @@ for l in parse(&#34;reviews_Video_Games.json.gz&#34;):
 <span class="o">|</span>    <span class="mf">4.0</span><span class="o">|</span> <span class="mi">4602643</span><span class="o">|</span>
 <span class="o">|</span>    <span class="mf">5.0</span><span class="o">|</span><span class="mi">13887020</span><span class="o">|</span>
 <span class="o">+-------+--------+</span></code></pre></div>
-<p><img src="https://www.example.com/img/2015/12/reviewsByOverall-1.png" alt="Number of Reviews per overall" /></p>
+<p><img src="https://seddonm1.github.io/img/2015/12/reviewsByOverall-1.png" alt="Number of Reviews per overall" /></p>
 
 <h4 id="2-3-prepare-the-data">2.3 Prepare the data</h4>
 
@@ -1046,7 +1046,7 @@ Skewed data, or having more training examples for one category than another, can
 <li>there are many more <code>transform</code> steps than anything else. This is because it is data and feature preparation which is the key work to prepare a machine learning model.</li>
 </ul>
 
-<p><img src="https://www.example.com/img/2015/12/pipeline.png" alt="pipeline" /></p>
+<p><img src="https://seddonm1.github.io/img/2015/12/pipeline.png" alt="pipeline" /></p>
 
 <h4 id="3-2-now-let-s-code-it">3.2 Now let&rsquo;s code it</h4>
 
@@ -1161,7 +1161,7 @@ Skewed data, or having more training examples for one category than another, can
 
 <p>At this point we have extracted all our <em>features</em> and at first I happily loaded them into the <code>NaiveBayes()</code> estimator, used it to transform my <code>test</code> dataset which produced nice <code>0.0</code>,<code>1.0</code>,<code>2.0</code>,<code>3.0</code>,<code>4.0</code> values which I then compared against my input labels which also look like <code>1.0</code>,<code>2.0</code>,<code>3.0</code>,<code>4.0</code>,<code>5.0</code> &hellip; with absolutely horrible results (~10%).</p>
 
-<p><img src="https://www.example.com/img/2015/12/ItsATrap.gif" alt="It's a Trap" /></p>
+<p><img src="https://seddonm1.github.io/img/2015/12/ItsATrap.gif" alt="It's a Trap" /></p>
 
 <p>I was unlucky enough to have numeric labels as if I had strings such as (<code>very good</code>, <code>good</code>, &hellip;) it have highlighted the issue straight away: the <code>NaiveBayes()</code> transformer will produce indexed values as outputs. Using <code>StringIndexer()</code> means you should always ensure that predictions produced by the model can be mapped back to the original labels.</p>
 
@@ -1210,9 +1210,9 @@ Skewed data, or having more training examples for one category than another, can
 
   <div id=links>
     
-    <a class="basic-alignment left" href="https://www.example.com/posts/performance-tuning-spark-pagerank/">&laquo; Performance Tuning Spark WikiPedia PageRank</a>
+    <a class="basic-alignment left" href="https://seddonm1.github.io/posts/performance-tuning-spark-pagerank/">&laquo; Performance Tuning Spark WikiPedia PageRank</a>
      
-    <a class="basic-alignment left" href="https://www.example.com/posts/natural-language-processing-with-apache-spark-ml-and-amazon-reviews-part-2/">Natural Language Processing with Apache Spark ML and Amazon Reviews (Part 2) &raquo;</a>
+    <a class="basic-alignment left" href="https://seddonm1.github.io/posts/natural-language-processing-with-apache-spark-ml-and-amazon-reviews-part-2/">Natural Language Processing with Apache Spark ML and Amazon Reviews (Part 2) &raquo;</a>
     
   </div>
 </section>
