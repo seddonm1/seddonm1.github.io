@@ -3,7 +3,12 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://reorchestrate.com/posts/using-apache-spark-neural-networks-to-recognise-digits/</loc>
+    <loc>https://reorchestrate.com/posts/code-doesnt-scale-for-etl/</loc>
+    <lastmod>2019-07-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://reorchestrate.com/posts/using-apache-spark-neural-networks-to-recognise-digits-copy/</loc>
     <lastmod>2016-03-12T00:00:00+00:00</lastmod>
   </url>
   
@@ -54,7 +59,7 @@
   
   <url>
     <loc>https://reorchestrate.com/tags/development/</loc>
-    <lastmod>2016-03-12T00:00:00+00:00</lastmod>
+    <lastmod>2019-07-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -66,25 +71,25 @@
   
   <url>
     <loc>https://reorchestrate.com/posts/</loc>
-    <lastmod>2016-03-12T00:00:00+00:00</lastmod>
+    <lastmod>2019-07-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://reorchestrate.com/tags/spark/</loc>
-    <lastmod>2016-03-12T00:00:00+00:00</lastmod>
+    <lastmod>2019-07-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://reorchestrate.com/tags/</loc>
-    <lastmod>2016-03-12T00:00:00+00:00</lastmod>
+    <lastmod>2019-07-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://reorchestrate.com/</loc>
-    <lastmod>2016-03-12T00:00:00+00:00</lastmod>
+    <lastmod>2019-07-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
