@@ -921,7 +921,7 @@
 
 <h2 id="history-of-the-problem">History of the problem</h2>
 
-<p>Since Hadoop was released in 2007 users have been struggling to use it to deploy reliable and scalable Extract-Transform-Load (ETL) data pipelines. This was exacerbated in the early days by the ecosystem still being in flux - it felt like every day there was another major Apache Foundation project being announced adding to the Hadoop ecosystem. Now, with the convergence of; adoption of cloud infrastructure, much more powerful hardware/faster networking and maturity of open-source solutions like Apache Spark it should be easier than ever to build ETL pipelines - but organisations are still grappling with how to rapidly deliver reliable and scalable ETL pipelines.</p>
+<p>Since Hadoop was released in 2007 users have been struggling to use it to deploy reliable and scalable Extract-Transform-Load (ETL) data pipelines. This was exacerbated in the early days by the ecosystem still being in flux - it felt like every day there was another major Apache Foundation project being announced adding to the Hadoop ecosystem. Now with the convergence of the adoption of cloud infrastructure, much more powerful hardware/faster networking and maturity of open-source solutions like Apache Spark it should be easier than ever to build ETL pipelines - but organisations are still grappling with how to rapidly deliver reliable and scalable ETL pipelines.</p>
 
 <h2 id="just-do-code">Just do Code?</h2>
 
@@ -954,6 +954,8 @@
 <h3 id="less-technical-debt">Less Technical Debt</h3>
 
 <p>Every line of code, no matter how fundamental to your business, is technical debt in there is a cost to maintain and test and carries a cognitive cost to understand its purpose. By abstracting the problem to a series of components with documented interfaces it is easy to re-implement just the desired behaviour against future execution engines and leave the configuration - which describes the <strong>intent</strong> of the pipeline - unchanged.</p>
+
+<p>Every line of code, no matter how fundamental to your business, is technical debt: there is a cost to maintain, test and carries a cognitive cost to understand its purpose.</p>
 
 <h3 id="time-to-market">Time to Market</h3>
 
