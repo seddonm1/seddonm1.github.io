@@ -17,7 +17,7 @@
       <pubDate>Fri, 19 Jul 2019 00:00:00 +0000</pubDate>
       
       <guid>https://reorchestrate.com/posts/code-doesnt-scale-for-etl/</guid>
-      <description>History of the problem Since Hadoop was released in 2007 users have been struggling to use it to deploy reliable and scalable Extract-Transform-Load (ETL) data pipelines. This was exacerbated in the early days of Hadoop by the ecosystem still being in flux - it felt like every day there was another major Apache Foundation project being announced adding to the Hadoop ecosystem. Now, with the convergence of; adoption of cloud based infrastructure, much more powerful hardware/faster networking and maturity of open-source solutions like Apache Spark, it should be easier than ever to build ETL pipelines - but organisations are still grappling with how to rapidly deliver reliable and scalable ETL pipelines.</description>
+      <description>History of the problem Since Hadoop was released in 2007 users have been struggling to use it to deploy reliable and scalable Extract-Transform-Load (ETL) data pipelines. This was exacerbated in the early days by the ecosystem still being in flux - it felt like every day there was another major Apache Foundation project being announced adding to the Hadoop ecosystem. Now, with the convergence of; adoption of cloud infrastructure, much more powerful hardware/faster networking and maturity of open-source solutions like Apache Spark it should be easier than ever to build ETL pipelines - but organisations are still grappling with how to rapidly deliver reliable and scalable ETL pipelines.</description>
     </item>
     
     <item>
