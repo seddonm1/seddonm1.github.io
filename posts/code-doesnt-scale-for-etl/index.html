@@ -925,7 +925,7 @@
 
 <h2 id="just-do-code">Just do Code?</h2>
 
-<p>Companies usually default to transforming data by manually programming them with programming languages like Scala, Java or Python. This seems sensible given that most large organisations have a workforce already trained in Java or similar languages who likely have the engineering knowledge to be able to build ETL pipelines.</p>
+<p>Companies usually default to transforming data by manually programming them with languages like Scala, Java or Python. This seems sensible given that most large organisations have a workforce already trained in Java or similar languages who likely have the engineering knowledge to build ETL pipelines.</p>
 
 <p>But this approach breaks in several ways:</p>
 
@@ -945,7 +945,7 @@
 
 <h2 id="the-alternative-configuration-driven">The Alternative: Configuration Driven</h2>
 
-<p>The solution that we have found to be most scalable is to agree on an approach for building Extract-Transform-Load pipelines where standard components are executed in different orders to build a pipeline with predictable behaviour. These components can then be abstracted them behind a configuration format that allows declarative ETL.</p>
+<p>The solution that we have found to be most scalable is to agree on an approach for building Extract-Transform-Load pipelines where standard components are executed in different orders to build a pipeline with predictable behaviour. These components can then be abstracted them behind a configuration format that allows declarative ETL. This is an implementation of an idea from this article: <a href="https://multithreaded.stitchfix.com/blog/2016/03/16/engineers-shouldnt-write-etl/">Engineers Shouldn&rsquo;t Write ETL</a>.</p>
 
 <h3 id="skills-aligned-workforce">Skills Aligned Workforce</h3>
 
@@ -967,7 +967,7 @@
 
 <p>The solution we have created to this problem is <a href="https://arc.tripl.ai/">Arc</a> an opinionated framework for defining predictable, repeatable and manageable data transformation pipelines. It comes with a full set of standardised components, a plugin system which allows extending with custom business logic not possible with the standard components and a <a href="https://github.com/tripl-ai/arc-jupyter">user interface</a> for rapid job development. It has been built with full operations management in mind (i.e. logging and environment variable parameters) and has been successfully used in production to process billions of rows.</p>
 
-<p>We encourage you to try the <a href="https://github.com/tripl-ai/arc-starter">starter project</a>.</p>
+<p>We encourage you to try the <a href="https://github.com/tripl-ai/arc-starter">starter project</a> for a data-included quick introduction.</p>
 
   </div>
 
