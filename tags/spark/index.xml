@@ -12,11 +12,11 @@
     
     
     <item>
-      <title>DeltaLake: A solution to blob-storage data warehousing</title>
-      <link>https://reorchestrate.com/posts/how-deltalake-works/</link>
+      <title>DeltaLake: A clever solution to a big (data) problem</title>
+      <link>https://reorchestrate.com/posts/deltalake-a-clever-solution-to-a-big-data-problem/</link>
       <pubDate>Fri, 09 Aug 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://reorchestrate.com/posts/how-deltalake-works/</guid>
+      <guid>https://reorchestrate.com/posts/deltalake-a-clever-solution-to-a-big-data-problem/</guid>
       <description>Why Blob Storage Is Risky To understand why DeltaLake is so useful it is important to understand how Apache Spark executes writes to non-transactional storage like Amazon S3 or other blob storage. To do this we are going use a contrived example where every day a user extracts their bank account transactions to a CSV file named yyyy-MM-dd_transactions.csv:
    file partition date amount description     2019-08-04_transactions.</description>
     </item>
