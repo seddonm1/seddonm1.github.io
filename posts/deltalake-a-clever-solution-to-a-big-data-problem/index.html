@@ -1059,9 +1059,61 @@
 <span class="p">{</span><span class="nt">&#34;protocol&#34;</span><span class="p">:{</span><span class="nt">&#34;minReaderVersion&#34;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="nt">&#34;minWriterVersion&#34;</span><span class="p">:</span><span class="mi">2</span><span class="p">}}</span>
 <span class="p">{</span><span class="nt">&#34;metaData&#34;</span><span class="p">:{</span><span class="nt">&#34;id&#34;</span><span class="p">:</span><span class="s2">&#34;fb6b1664-1c2c-4b8e-b499-301960d4a1b7&#34;</span><span class="p">,</span><span class="nt">&#34;format&#34;</span><span class="p">:{</span><span class="nt">&#34;provider&#34;</span><span class="p">:</span><span class="s2">&#34;parquet&#34;</span><span class="p">,</span><span class="nt">&#34;options&#34;</span><span class="p">:{}},</span><span class="nt">&#34;schemaString&#34;</span><span class="p">:</span><span class="s2">&#34;{\&#34;type\&#34;:\&#34;struct\&#34;,\&#34;fields\&#34;:[{\&#34;name\&#34;:\&#34;date\&#34;,\&#34;type\&#34;:\&#34;date\&#34;,\&#34;nullable\&#34;:true,\&#34;metadata\&#34;:{\&#34;internal\&#34;:false,\&#34;nullable\&#34;:true,\&#34;description\&#34;:\&#34;transaction date\&#34;}},{\&#34;name\&#34;:\&#34;amount\&#34;,\&#34;type\&#34;:\&#34;decimal(10,2)\&#34;,\&#34;nullable\&#34;:true,\&#34;metadata\&#34;:{\&#34;internal\&#34;:false,\&#34;nullable\&#34;:true,\&#34;description\&#34;:\&#34;transaction amount\&#34;}},{\&#34;name\&#34;:\&#34;description\&#34;,\&#34;type\&#34;:\&#34;string\&#34;,\&#34;nullable\&#34;:true,\&#34;metadata\&#34;:{\&#34;internal\&#34;:false,\&#34;nullable\&#34;:true,\&#34;description\&#34;:\&#34;transaction description\&#34;}},{\&#34;name\&#34;:\&#34;_filename\&#34;,\&#34;type\&#34;:\&#34;string\&#34;,\&#34;nullable\&#34;:true,\&#34;metadata\&#34;:{\&#34;internal\&#34;:true}},{\&#34;name\&#34;:\&#34;_index\&#34;,\&#34;type\&#34;:\&#34;integer\&#34;,\&#34;nullable\&#34;:true,\&#34;metadata\&#34;:{\&#34;internal\&#34;:true}},{\&#34;name\&#34;:\&#34;_errors\&#34;,\&#34;type\&#34;:{\&#34;type\&#34;:\&#34;array\&#34;,\&#34;elementType\&#34;:{\&#34;type\&#34;:\&#34;struct\&#34;,\&#34;fields\&#34;:[{\&#34;name\&#34;:\&#34;field\&#34;,\&#34;type\&#34;:\&#34;string\&#34;,\&#34;nullable\&#34;:true,\&#34;metadata\&#34;:{}},{\&#34;name\&#34;:\&#34;message\&#34;,\&#34;type\&#34;:\&#34;string\&#34;,\&#34;nullable\&#34;:true,\&#34;metadata\&#34;:{}}]},\&#34;containsNull\&#34;:true},\&#34;nullable\&#34;:true,\&#34;metadata\&#34;:{\&#34;internal\&#34;:true}}]}&#34;</span><span class="p">,</span><span class="nt">&#34;partitionColumns&#34;</span><span class="p">:[],</span><span class="nt">&#34;configuration&#34;</span><span class="p">:{},</span><span class="nt">&#34;createdTime&#34;</span><span class="p">:</span><span class="mi">1565327751167</span><span class="p">}}</span>
 <span class="p">{</span><span class="nt">&#34;add&#34;</span><span class="p">:{</span><span class="nt">&#34;path&#34;</span><span class="p">:</span><span class="s2">&#34;part-00000-c5bc4211-f1e5-447b-b6a6-2b06ac214421-c000.snappy.parquet&#34;</span><span class="p">,</span><span class="nt">&#34;partitionValues&#34;</span><span class="p">:{},</span><span class="nt">&#34;size&#34;</span><span class="p">:</span><span class="mi">2642</span><span class="p">,</span><span class="nt">&#34;modificationTime&#34;</span><span class="p">:</span><span class="mi">1565327755000</span><span class="p">,</span><span class="nt">&#34;dataChange&#34;</span><span class="p">:</span><span class="kc">true</span><span class="p">}}</span></code></pre></div>
+<p>The <code>part-00000-c5bc4211-f1e5-447b-b6a6-2b06ac214421-c000.snappy.parquet</code> would contain only:</p>
+
+<table>
+<thead>
+<tr>
+<th>date</th>
+<th>amount</th>
+<th>description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>2019-08-04</td>
+<td>500.00</td>
+<td>Pay</td>
+</tr>
+
+<tr>
+<td>2019-08-04</td>
+<td>-21.60</td>
+<td>Uber Eats</td>
+</tr>
+</tbody>
+</table>
+
 <p>Running on <code>2019-08-05</code> with <code>saveMode=Append</code> results in <code>00000000000000000001.json</code>.</p>
 <div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span><span class="nt">&#34;commitInfo&#34;</span><span class="p">:{</span><span class="nt">&#34;timestamp&#34;</span><span class="p">:</span><span class="mi">1565327830447</span><span class="p">,</span><span class="nt">&#34;operation&#34;</span><span class="p">:</span><span class="s2">&#34;WRITE&#34;</span><span class="p">,</span><span class="nt">&#34;operationParameters&#34;</span><span class="p">:{</span><span class="nt">&#34;mode&#34;</span><span class="p">:</span><span class="s2">&#34;Append&#34;</span><span class="p">,</span><span class="nt">&#34;partitionBy&#34;</span><span class="p">:</span><span class="s2">&#34;[]&#34;</span><span class="p">},</span><span class="nt">&#34;readVersion&#34;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">&#34;isBlindAppend&#34;</span><span class="p">:</span><span class="kc">true</span><span class="p">}}</span>
 <span class="p">{</span><span class="nt">&#34;add&#34;</span><span class="p">:{</span><span class="nt">&#34;path&#34;</span><span class="p">:</span><span class="s2">&#34;part-00000-a173a6c3-09f5-443c-a378-b3270b2846da-c000.snappy.parquet&#34;</span><span class="p">,</span><span class="nt">&#34;partitionValues&#34;</span><span class="p">:{},</span><span class="nt">&#34;size&#34;</span><span class="p">:</span><span class="mi">2670</span><span class="p">,</span><span class="nt">&#34;modificationTime&#34;</span><span class="p">:</span><span class="mi">1565327830000</span><span class="p">,</span><span class="nt">&#34;dataChange&#34;</span><span class="p">:</span><span class="kc">true</span><span class="p">}}</span></code></pre></div>
+<p>The <code>part-00000-a173a6c3-09f5-443c-a378-b3270b2846da-c000.snappy.parquet</code> would contain only:</p>
+
+<table>
+<thead>
+<tr>
+<th>date</th>
+<th>amount</th>
+<th>description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>2019-08-05</td>
+<td>-55.29</td>
+<td>Uber Eats</td>
+</tr>
+
+<tr>
+<td>2019-08-05</td>
+<td>-10.00</td>
+<td>Movie Ticket</td>
+</tr>
+</tbody>
+</table>
+
 <p>The important bit to focus on is the <code>add</code> operation which tells <code>DeltaLake</code> to <code>add</code> the data contained in <code>part-00000-a173a6c3-09f5-443c-a378-b3270b2846da-c000.snappy.parquet</code> to the previous version (<code>0</code>) which contains only <code>part-00000-c5bc4211-f1e5-447b-b6a6-2b06ac214421-c000.snappy.parquet</code>. On every 10th write <code>DeltaLake</code> will automatically capture a state snapshot so the maximum number of <code>versions</code> which need to be applied to the last known snapshot are limited.</p>
 
 <p>The beauty of this is that:</p>
