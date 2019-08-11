@@ -939,13 +939,14 @@
 
 <h2 id="why-blob-storage-is-risky">Why Blob Storage Is Risky</h2>
 
-<p>To understand why <a href="https://delta.io">DeltaLake</a> is so useful it is important to understand how Apache Spark executes writes to non-transactional storage like <a href="https://aws.amazon.com/s3/">Amazon S3</a> or other blob storage. To do this we are going use a contrived example where every day a user extracts their bank account transactions to a CSV file named <code>yyyy-MM-dd_transactions.csv</code>:</p>
+<p>Many people use <a href="https://aws.amazon.com/s3/">Amazon S3</a> or equivalent services to replace their relational database data warehouses as blob storage coupled with technologies like the compressed-columnar <a href="https://parquet.apache.org/">parquet</a> file format offsers a reasonably perfomant, hugely scalable and cheap alternative.</p>
+
+<p>To understand why blob storage can be risky it is important to understand how Apache Spark executes writes to non-transactional storage systems like S3 or other blob storage. To do this we are going use a contrived example where every day a user extracts their bank account transactions to a CSV file named <code>yyyy-MM-dd_transactions.csv</code>:</p>
 
 <table>
 <thead>
 <tr>
 <th>file</th>
-<th>partition</th>
 <th>date</th>
 <th>amount</th>
 <th>description</th>
@@ -955,7 +956,6 @@
 <tbody>
 <tr>
 <td>2019-08-04_transactions.csv</td>
-<td>0</td>
 <td>2019-08-04</td>
 <td>500.00</td>
 <td>Pay</td>
@@ -963,7 +963,6 @@
 
 <tr>
 <td>2019-08-04_transactions.csv</td>
-<td>0</td>
 <td>2019-08-04</td>
 <td>-21.60</td>
 <td>Uber Eats</td>
@@ -971,7 +970,6 @@
 
 <tr>
 <td>2019-08-05_transactions.csv</td>
-<td>1</td>
 <td>2019-08-05</td>
 <td>-55.29</td>
 <td>Uber Eats</td>
@@ -979,7 +977,6 @@
 
 <tr>
 <td>2019-08-05_transactions.csv</td>
-<td>1</td>
 <td>2019-08-05</td>
 <td>-10.00</td>
 <td>Movie Ticket</td>
@@ -987,7 +984,6 @@
 
 <tr>
 <td>2019-08-06_transactions.csv</td>
-<td>2</td>
 <td>2019-08-06</td>
 <td>-12.99</td>
 <td>Netflix</td>
@@ -995,7 +991,6 @@
 
 <tr>
 <td>2019-08-06_transactions.csv</td>
-<td>2</td>
 <td>2019-08-06</td>
 <td>-20.00</td>
 <td>ATM Withdrawal</td>
@@ -1014,12 +1009,12 @@
 <li>Assuming all <code>Worker</code> processes report success then the <code>Driver</code> sequentially executes a <code>mv</code> (move) for each temporary file part to move it into the final file path.</li>
 </ol>
 
-<p>This is actually very risky due to the nature of S3 (and other blob storage systems) as:</p>
+<p>This is actually very risky due to the non-<a href="https://en.wikipedia.org/wiki/ACID">ACID</a> properties of S3 (and other blob storage systems) as:</p>
 
 <ol>
-<li>The <code>mv</code> move process is executed by the <code>Driver</code> process and offers no <code>transactional</code> guarantees meaning that if the network connection is broken or the <code>Driver</code> process crashes partway through the list of files to move then the target path will contain a non-consistent dataset (only a subset of the data). Contrast this to a database which would not commit the data if the connection was severed before a transaction <code>COMMIT</code> has occured.</li>
+<li>The <code>mv</code> move process is executed by the <code>Driver</code> process is not <a href="https://en.wikipedia.org/wiki/ACID#Atomicity">Atomic</a> (offers no <code>transactional</code> guarantees) meaning that if the network connection is broken or the <code>Driver</code> process crashes partway through the list of files to move then the target path will contain a non-consistent dataset (only a subset of the data will have been moved). Contrast this to a traditional data warehouse with <code>transacitonal</code> guarantees the database not commit the data if the connection was severed before a transaction <code>COMMIT</code> has occured.</li>
+<li>While the <code>mv</code> (move) stage is occuring a consumer may read the data and receive a dataset with a non-consistent state as s3 does not provide <a href="https://en.wikipedia.org/wiki/ACID#Atomicity">Isolation</a>.</li>
 <li>The <code>mv</code> (move) process is executed by the <code>Driver</code> process sequentially so it is an <code>O(n)</code> problem, meaning it will take longer and longer depending on the number of files to move, increasing the risk of the previous <code>non-consistent</code> dataset issues.</li>
-<li>While the <code>mv</code> (move) stage is occuring a consumer may read the data and receive a dataset with a non-consistent state.</li>
 </ol>
 
 <h2 id="solutions">Solutions</h2>
@@ -1034,13 +1029,13 @@
 
 <ul>
 <li>having to write a full dataset each time which is both inefficient and potentially costly</li>
-<li>having to run a full-database to essentially hold pointers to the file path (S3 doesn&rsquo;t support <code>symlinks</code>)</li>
+<li>having to run a seperate state store (database) to essentially hold pointers to the file path (S3 doesn&rsquo;t support <code>symlinks</code>)</li>
 <li>how to know which version is most recent and/or valid without an external store (for consuming)</li>
 </ul>
 
 <h4 id="deltalake">DeltaLake</h4>
 
-<p><a href="https://delta.io">DeltaLake</a> is a custom (open source) solution developed by <a href="https://databricks.com/">Databricks</a> which elegantly sidesteps the problem of not having <code>transactional</code> guarantees in S3 by using versioned <code>_delta_log/index</code> <a href="https://en.wikipedia.org/wiki/JSON">JSON</a> files alongside the <code>parquet</code> to describe which changes (<code>deltas</code>) are required to move from one <code>version</code> of a dataset to the next. This has been included in <a href="https://arc.tripl.ai/">Arc</a> as the <a href="https://arc.tripl.ai/extract/#deltalakeextract">DeltaLakeExtract</a> and <a href="https://arc.tripl.ai/load/#deltalakeload">DeltaLakeLoad</a> plugin stages.</p>
+<p><a href="https://delta.io">DeltaLake</a> is a custom and open source solution developed by <a href="https://databricks.com/">Databricks</a> which elegantly sidesteps the problem of not having <code>transactional</code> guarantees in S3 by using versioned <code>_delta_log/index</code> <a href="https://en.wikipedia.org/wiki/JSON">JSON</a> files alongside the <code>parquet</code> to describe which changes (<code>deltas</code>) are required to move from one <code>version</code> of a dataset to the next. This has been included in <a href="https://arc.tripl.ai/">Arc</a> as the <a href="https://arc.tripl.ai/extract/#deltalakeextract">DeltaLakeExtract</a> and <a href="https://arc.tripl.ai/load/#deltalakeload">DeltaLakeLoad</a> plugin stages.</p>
 
 <p><img src="https://reorchestrate.com/img/2019/deltalake.png" alt="DeltaLake Process" /></p>
 
@@ -1114,12 +1109,12 @@
 </tbody>
 </table>
 
-<p>The important bit to focus on is the <code>add</code> operation which tells <code>DeltaLake</code> to <code>add</code> the data contained in <code>part-00000-a173a6c3-09f5-443c-a378-b3270b2846da-c000.snappy.parquet</code> to the previous version (<code>0</code>) which contains only <code>part-00000-c5bc4211-f1e5-447b-b6a6-2b06ac214421-c000.snappy.parquet</code>. On every 10th write <code>DeltaLake</code> will automatically capture a state snapshot so the maximum number of <code>versions</code> which need to be applied to the last known snapshot are limited.</p>
+<p>The important bit to focus on is the <code>add</code> operation which tells <code>DeltaLake</code> to <code>add</code> the data contained in <code>part-00000-a173a6c3-09f5-443c-a378-b3270b2846da-c000.snappy.parquet</code> to the previous version (<code>0</code>) which contains only <code>part-00000-c5bc4211-f1e5-447b-b6a6-2b06ac214421-c000.snappy.parquet</code>. On every 10th write <code>DeltaLake</code> will automatically capture a state snapshot so the maximum number of <code>versions</code> which need to be applied to the last known snapshot are limited. <code>DeltaLake</code> can also <code>remove</code> file parts from the dataset to compute the new state.</p>
 
 <p>The beauty of this is that:</p>
 
 <ul>
-<li>as the <code>JSON</code> index is a single write it is <code>atomic</code>/<code>transactional</code> (S3 supported) and cannot leave users reading an internally inconsistent dataset.</li>
+<li>as the <code>JSON</code> index is a single write it is <code>atomic</code> (S3 supported as it is singular) and cannot leave users reading an internally inconsistent dataset (<code>isolation</code>) as the <code>JSON</code> file would not be written yet to instruct consumers to include those new <code>parquet</code> parts.</li>
 <li>by default reading a <code>DeltaLake</code> path will return the most recent version.</li>
 <li>the underlying data is just <code>parquet</code> which has been well tested and offers excellent performance expected from compressed, columnar storage (and if required can be read directly as with any other <code>parquet</code>).</li>
 <li>users are able to &lsquo;time-travel&rsquo; back to previous versions without having to store full copies.</li>

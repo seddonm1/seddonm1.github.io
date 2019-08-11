@@ -17,8 +17,8 @@
       <pubDate>Fri, 09 Aug 2019 00:00:00 +0000</pubDate>
       
       <guid>https://reorchestrate.com/posts/deltalake-a-clever-solution-to-a-big-data-problem/</guid>
-      <description>Why Blob Storage Is Risky To understand why DeltaLake is so useful it is important to understand how Apache Spark executes writes to non-transactional storage like Amazon S3 or other blob storage. To do this we are going use a contrived example where every day a user extracts their bank account transactions to a CSV file named yyyy-MM-dd_transactions.csv:
-   file partition date amount description     2019-08-04_transactions.</description>
+      <description>Why Blob Storage Is Risky Many people use Amazon S3 or equivalent services to replace their relational database data warehouses as blob storage coupled with technologies like the compressed-columnar parquet file format offsers a reasonably perfomant, hugely scalable and cheap alternative.
+To understand why blob storage can be risky it is important to understand how Apache Spark executes writes to non-transactional storage systems like S3 or other blob storage. To do this we are going use a contrived example where every day a user extracts their bank account transactions to a CSV file named yyyy-MM-dd_transactions.</description>
     </item>
     
     <item>
