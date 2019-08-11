@@ -1013,7 +1013,7 @@
 
 <ol>
 <li>The <code>mv</code> move process is executed by the <code>Driver</code> process is not <a href="https://en.wikipedia.org/wiki/ACID#Atomicity">Atomic</a> (offers no <code>transactional</code> guarantees) meaning that if the network connection is broken or the <code>Driver</code> process crashes partway through the list of files to move then the target path will contain a non-consistent dataset (only a subset of the data will have been moved). Contrast this to a traditional data warehouse with <code>transacitonal</code> guarantees the database not commit the data if the connection was severed before a transaction <code>COMMIT</code> has occured.</li>
-<li>While the <code>mv</code> (move) stage is occuring a consumer may read the data and receive a dataset with a non-consistent state as s3 does not provide <a href="https://en.wikipedia.org/wiki/ACID#Atomicity">Isolation</a>.</li>
+<li>While the <code>mv</code> (move) stage is occuring a consumer may read the data and receive a dataset with a non-consistent state as s3 does not provide read-<a href="https://en.wikipedia.org/wiki/ACID#Atomicity">Isolation</a>.</li>
 <li>The <code>mv</code> (move) process is executed by the <code>Driver</code> process sequentially so it is an <code>O(n)</code> problem, meaning it will take longer and longer depending on the number of files to move, increasing the risk of the previous <code>non-consistent</code> dataset issues.</li>
 </ol>
 
