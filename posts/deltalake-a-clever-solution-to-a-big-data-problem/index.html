@@ -939,7 +939,7 @@
 
 <h2 id="why-blob-storage-is-risky">Why Blob Storage Is Risky</h2>
 
-<p>Many people use <a href="https://aws.amazon.com/s3/">Amazon S3</a> or equivalent services to replace their relational database data warehouses as blob storage coupled with technologies like the compressed-columnar <a href="https://parquet.apache.org/">parquet</a> file format offsers a reasonably perfomant, hugely scalable and cheap alternative.</p>
+<p>Many people use <a href="https://aws.amazon.com/s3/">Amazon S3</a> or equivalent services to replace their relational database data warehouses as blob storage coupled with technologies like the compressed-columnar <a href="https://parquet.apache.org/">parquet</a> file format offers a reasonably perfomant, massively scalable and cheap alternative.</p>
 
 <p>To understand why blob storage can be risky it is important to understand how Apache Spark executes writes to non-transactional storage systems like S3 or other blob storage. To do this we are going use a contrived example where every day a user extracts their bank account transactions to a CSV file named <code>yyyy-MM-dd_transactions.csv</code>:</p>
 
