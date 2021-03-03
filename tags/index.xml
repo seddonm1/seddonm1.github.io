@@ -6,15 +6,24 @@
     <description>Recent content in Tags on reorchestrate</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 09 Aug 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Mar 2021 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://reorchestrate.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Debezium</title>
+      <link>https://reorchestrate.com/tags/debezium/</link>
+      <pubDate>Mon, 01 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://reorchestrate.com/tags/debezium/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Development</title>
       <link>https://reorchestrate.com/tags/development/</link>
-      <pubDate>Fri, 09 Aug 2019 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 01 Mar 2021 00:00:00 +0000</pubDate>
       
       <guid>https://reorchestrate.com/tags/development/</guid>
       <description></description>

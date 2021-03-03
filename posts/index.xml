@@ -6,10 +6,19 @@
     <description>Recent content in Posts on reorchestrate</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 09 Aug 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Mar 2021 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://reorchestrate.com/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Debezium does not impact source database performance</title>
+      <link>https://reorchestrate.com/posts/debezium-performance-impact/</link>
+      <pubDate>Mon, 01 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://reorchestrate.com/posts/debezium-performance-impact/</guid>
+      <description>Debezium is a Database Change-Data-Capture (aka CDC) tool that is able to decode open source and proprietary database replication logs, normalize them to a standard payload format and push them into a series of Kafka topics. It implements the Confluent Kafka Connect interface so is built to be highly-available, has development supported by RedHat and commercial support from Confluent. If you are even moderately interested in data and the reason for Change-Data-Capture is not obvious head immediately to watch this.</description>
+    </item>
     
     <item>
       <title>DeltaLake: A clever solution to a big (data) problem</title>
