@@ -937,9 +937,9 @@
   <div class="entry-content">
     
 
-<p><a href="https://debezium.io/">Debezium</a> is a Database Change-Data-Capture (aka CDC) tool that is able to decode open source and proprietary database replication logs, normalize them to a standard payload format and push them into a series of <a href="https://kafka.apache.org/">Kafka</a> topics. It implements the Confluent <a href="https://docs./platform/current/connect/index.html">Kafka Connect</a> interface so is built to be highly-available, has development supported by <a href="https://redhat.com">RedHat</a> and commercial support from <a href="https://confluent.io">Confluent</a>. If you are even moderately interested in data and the reason for Change-Data-Capture is not obvious head immediately to <a href="https://martin.kleppmann.com/2015/11/05/database-inside-out-at-oredev.html">watch this</a>.</p>
+<p><a href="https://debezium.io/">Debezium</a> is a Database Change-Data-Capture (aka CDC) tool that is able to decode open source and proprietary database logs, normalize them to a standard payload format and push them into a series of <a href="https://kafka.apache.org/">Kafka</a> topics. It implements the Confluent <a href="https://docs./platform/current/connect/index.html">Kafka Connect</a> interface so is built to be highly-available, has development supported by <a href="https://redhat.com">RedHat</a> and commercial support from <a href="https://confluent.io">Confluent</a>. If you are even moderately interested in data and the reason for Change-Data-Capture is not obvious head immediately to <a href="https://martin.kleppmann.com/2015/11/05/database-inside-out-at-oredev.html">watch this</a>.</p>
 
-<p>Whilst its primary function is to replicate change events in near-realtime from relational and NoSQL databases to Kafka its secondly (and undervalued) superpower is actually its ability to normalize events from a variety of databases into a standardized schema making consumption relatively easy from disparate databases. This means change events from Postgres, MySQL and even Mongo can be consumed without hundreds of lines of code to deal with their differences.</p>
+<p>Whilst its primary function is to replicate change events in near-realtime from relational and NoSQL databases to Kafka its secondary (and underappreciated) superpower is actually its ability to normalize events from a variety of databases into a standardized schema making consumption relatively easy from disparate databases. This means change events from Postgres, MySQL and even Mongo can be consumed without hundreds of lines of code to deal with their differences.</p>
 
 <p>The biggest problem with Debezium that I have encountered comes from Database Administrators who raise the logical question: will this impact the performance of the database?</p>
 
@@ -949,7 +949,7 @@
 
 <h1 id="hypothesis">Hypothesis</h1>
 
-<p>Given that Debezium reuses the database transaction logs which are already a key component of any online transaction processing (OLTP) database such as MySQL (i.e. transaction logs are required to run the core database functionality) there should be minimal performance impact by enabling Debezium.</p>
+<p>Given that Debezium reuses the database logs (e.g. the <a href="https://dev.mysql.com/doc/internals/en/binary-log-overview.html">binlog</a> for MySQL or <a href="https://www.postgresql.org/docs/current/wal.html">write-ahead-log</a> for Postgres) which are already a key component of any online transaction processing (OLTP) database there should be minimal performance impact by enabling Debezium.</p>
 
 <p>Additionally, from desktop research, there seems to be very little discussion on Github/forums regarding any performance impact indicating this is not a problem.</p>
 
@@ -965,9 +965,7 @@
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">tpcc prepare --no-check
 ch prepare --dropdata
 ch --warehouses <span class="m">1</span> --threads <span class="m">4</span> --acThreads <span class="m">2</span> --time 1800s run</code></pre></div>
-<p>This configuration produces a 30 minute execution with 4 OLTP threads (creating inserts, updates, deletes) and 2 ‘Analytical Client’ threads which run periodic heavy-read workload queries. These settings combined create approximately 3000 queries per second and creates roughly 65% sustained CPU load on the database server (testing on an idle database would not be representative). This workload was chosen as it ensures both reads and writes are happening, the CPU is being worked and that there is CPU headroom available.</p>
-
-<p>Good work <a href="https://pingcap.com/">PingCAP</a> for making this tool available!</p>
+<p>This configuration produces a 30 minute execution with 4 OLTP threads (creating inserts, updates, deletes) and 2 &lsquo;Analytical Client&rsquo; threads which run periodic heavy-read queries. These settings combined create approximately 3000 queries per second and create roughly 65% sustained CPU load on the database server (testing on an idle database would not be representative). This workload was chosen as it ensures both reads and writes are happening, the CPU is being worked and that there is CPU headroom available. Good work <a href="https://pingcap.com/">PingCAP</a> for making this tool available!</p>
 
 <p><strong>Debezium:</strong> Official <code>debezium/connect:1.4</code> (digest <code>558bd72c8783fe8ca0e2f8f3a7214f33371346e48f950936595dc3fb7079ef84</code>) image from <a href="https://hub.docker.com/r/debezium/connect">Docker Hub</a> with the following configuration:</p>
 <div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
@@ -1011,7 +1009,7 @@ ch --warehouses <span class="m">1</span> --threads <span class="m">4</span> --ac
 <p>This chart shows the CPU utilisation under two discrete scenarios.</p>
 
 <ul>
-<li><strong>Baseline</strong> represents the MySQL Average CPU Utilisation per Minute when running the CH-benCHmark workload with the settings above for 30 minutes.  5 runs were recorded.</li>
+<li><strong>Baseline</strong> represents the MySQL Average CPU Utilisation per Minute when running the CH-benCHmark workload with the settings above for 30 minutes. 5 runs were recorded.</li>
 <li><strong>Debezium</strong> represents the same workload as Baseline but with the Debezium connector also reading the logs and writing the events to Kafka in parallel. 5 runs were recorded.</li>
 </ul>
 
@@ -1019,7 +1017,13 @@ ch --warehouses <span class="m">1</span> --threads <span class="m">4</span> --ac
 
 <p>This chart has been configured to ‘overlay&rsquo; the runs to show the CPU utilisation at the same minute into the benchmark execution.</p>
 
+<h2 id="consumption">Consumption</h2>
+
 <p>If you are struggling to process the events produced by Debezium then try the <a href="https://arc.tripl.ai/transform/#debeziumtransform">Arc plugin</a> that allows you to safely consume and reproduce the state of your source table at a point in time.</p>
+
+<h4 id="updates">Updates</h4>
+
+<p>Updated 2021-03-04 to clarify binlog/write-ahead-log vs transaction log language and fix some language.</p>
 
   </div>
 
