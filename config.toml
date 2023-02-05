@@ -11,7 +11,7 @@ pygmentsCodefences = true
 
 [params]
   sitename = "reorchestrate"
-
+  source = "https://github.com/seddonm1/seddonm1.github.io/blob/main/content/posts/"
   dateFormat = "2 January 2006"
 
 [[params.social]]
