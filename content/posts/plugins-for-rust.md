@@ -107,7 +107,7 @@ Then reduce the list of points to calculate the total distance.
 // calculate the total length of a set of input features in canadian football fields
 function calculate(data) {
   // canadian football fields are 140 meters
-  const candadian_football_field = 140;
+  const canadian_football_field = 140;
 
   return data.features.reduce(
     (accumulator, currentValue, currentIndex, array) => {
@@ -121,7 +121,7 @@ function calculate(data) {
           previousValue.geometry.coordinates[1],
           previousValue.geometry.coordinates[0]
         );
-        return accumulator + dist / candadian_football_field;
+        return accumulator + dist / canadian_football_field;
       }
     },
     0
