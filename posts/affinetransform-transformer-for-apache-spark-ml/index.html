@@ -1,0 +1,220 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="chrome=1"><meta name=HandheldFriendly content=True><meta name=MobileOptimized content=320><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content=no-referrer><link href="https://fonts.googleapis.com/css?family=Open+Sans:400|Old+Standard+TT:400" rel=stylesheet type=text/css><link rel=icon type=image/png href=https://reorchestrate.com/favicon_16x16.png sizes=16x16><link rel=icon type=image/png href=https://reorchestrate.com/favicon_32x32.png sizes=32x32><link rel=icon type=image/png href=https://reorchestrate.com/favicon_128x128.png sizes=128x128><title>AffineTransform Transformer for Apache Spark ML</title><link rel=canonical href=https://reorchestrate.com/posts/affinetransform-transformer-for-apache-spark-ml/><style>*{border:0;font:inherit;font-size:100%;vertical-align:baseline;margin:0;padding:0;color:#000;text-decoration-skip:ink}body{font-family:open sans,myriad pro,Myriad,sans-serif;font-size:17px;-webkit-font-smoothing:antialiased;line-height:160%;color:#1d1313;max-width:950px;margin:auto}p{margin:20px 0}a img{border:none}img{margin:10px auto;max-width:100%;display:block}.left-justify{float:left}.right-justify{float:right}pre,code{font:12px Consolas,liberation mono,Menlo,Courier,monospace;background-color:#f7f7f7}code{font-size:12px;padding:4px}pre{margin-top:0;margin-bottom:16px;word-wrap:normal;padding:16px;overflow:auto;font-size:85%;line-height:1.45}pre>code{padding:0;margin:0;font-size:100%;word-break:normal;white-space:pre;background:0 0;border:0}pre code{display:inline;max-width:auto;padding:0;margin:0;overflow:visible;line-height:inherit;word-wrap:normal;background-color:#0000;border:0}pre code::before,pre code::after{content:normal}em,q,em,dfn{font-style:italic}.sans,html .gist .gist-file .gist-meta{font-family:open sans,myriad pro,Myriad,sans-serif}.mono,pre,code,tt,p code,li code{font-family:Menlo,Monaco,andale mono,lucida console,courier new,monospace}.heading,.serif,h1,h2,h3,h4,h5{font-family:old standard tt,serif}strong{font-weight:600}table{width:100%}thead{font-weight:800;background:#dadada}tbody tr:nth-child(even){background:#f7f7f7}table td,th{padding:2px}q:before{content:"\201C"}q:after{content:"\201D"}del,s{text-decoration:line-through}blockquote{font-family:old standard tt,serif;text-align:center;padding:50px}blockquote p{display:inline-block;font-style:italic}blockquote:before,blockquote:after{font-family:old standard tt,serif;content:'\201C';font-size:35px;color:#403c3b}blockquote:after{content:'\201D'}hr{width:40%;height:1px;background:#403c3b;margin:25px auto}h1{font-weight:700;font-size:35px}h2{font-weight:700;font-size:28px}h3{font-weight:700;font-size:22px;margin-top:28px}h4{font-weight:700;font-size:20px;margin-top:20px}h5{font-size:18px;margin-top:18px}h1 a,h2 a,h3 a,h4 a,h5 a{text-decoration:none}h1,h2{margin-top:28px}#sub-header,time{color:#403c3b;font-size:13px}#sub-header{margin:0 4px}#nav h1 a{font-size:35px;color:#1d1313;line-height:120%}.posts_listing a,#nav a{text-decoration:none}li{margin-left:20px}ul li{margin-left:5px}ul li{list-style-type:none}ul li:before{content:"\00BB \0020"}#nav ul li:before,.posts_listing li:before{content:'';margin-right:0}#content{text-align:left;width:100%;font-size:15px;padding:60px 0 80px}#content h1,#content h2{margin-bottom:5px}#content h2{font-size:25px}#content .entry-content{margin-top:15px}#content time{margin-left:3px}#content h1{font-size:30px}.highlight{margin:10px 0}.posts_listing{margin:0 0 50px}.posts_listing li{margin:0 0 25px 15px}.posts_listing li a:hover,#nav a:hover{text-decoration:underline}#nav{text-align:center;position:static;margin-top:60px}#nav ul{display:table;margin:8px auto 0}#nav li{list-style-type:none;display:table-cell;font-size:15px;padding:0 20px}#links{margin:50px 0 0}#links :nth-child(2){float:right}#not-found{text-align:center}#not-found a{font-family:old standard tt,serif;font-size:200px;text-decoration:none;display:inline-block;padding-top:225px}#nav .sub{font-size:80%;display:inline-block;vertical-align:middle}#nav .sub p{color:#403c3b;margin:0}#nav .sub a{text-decoration:none}#nav .sub svg{fill:#403c3b;display:inline-block;vertical-align:middle;padding-bottom:3px;padding-right:5px}@media(max-width:750px){body{padding-left:20px;padding-right:20px}#nav h1 a{font-size:28px}#nav li{font-size:13px;padding:0 15px}#content{margin-top:0;padding-top:50px;font-size:14px}#content h1{font-size:25px}#content h2{font-size:22px}.posts_listing li div{font-size:12px}}@media(max-width:400px){body{padding-left:20px;padding-right:20px}#nav h1 a{font-size:22px}#nav li{font-size:12px;padding:0 10px}#content{margin-top:0;padding-top:20px;font-size:12px}#content h1{font-size:20px}#content h2{font-size:18px}.posts_listing li div{font-size:12px}}.chroma{background-color:#f0f0f0}.chroma .err{}.chroma .lntd{vertical-align:top;padding:0;margin:0;border:0}.chroma .lntable{border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block}.chroma .hl{display:block;width:100%;background-color:#ffc}.chroma .lnt{margin-right:.4em;padding:0 .4em}.chroma .ln{margin-right:.4em;padding:0 .4em}.chroma .k{color:#007020;font-weight:700}.chroma .kc{color:#007020;font-weight:700}.chroma .kd{color:#007020;font-weight:700}.chroma .kn{color:#007020;font-weight:700}.chroma .kp{color:#007020}.chroma .kr{color:#007020;font-weight:700}.chroma .kt{color:#902000}.chroma .na{color:#4070a0}.chroma .nb{color:#007020}.chroma .nc{color:#0e84b5;font-weight:700}.chroma .no{color:#60add5}.chroma .nd{color:#555;font-weight:700}.chroma .ni{color:#d55537;font-weight:700}.chroma .ne{color:#007020}.chroma .nf{color:#06287e}.chroma .nl{color:#002070;font-weight:700}.chroma .nn{color:#0e84b5;font-weight:700}.chroma .nt{color:#062873;font-weight:700}.chroma .nv{color:#bb60d5}.chroma .s{color:#4070a0}.chroma .sa{color:#4070a0}.chroma .sb{color:#4070a0}.chroma .sc{color:#4070a0}.chroma .dl{color:#4070a0}.chroma .sd{color:#4070a0;font-style:italic}.chroma .s2{color:#4070a0}.chroma .se{color:#4070a0;font-weight:700}.chroma .sh{color:#4070a0}.chroma .si{color:#70a0d0;font-style:italic}.chroma .sx{color:#c65d09}.chroma .sr{color:#235388}.chroma .s1{color:#4070a0}.chroma .ss{color:#517918}.chroma .m{color:#40a070}.chroma .mb{color:#40a070}.chroma .mf{color:#40a070}.chroma .mh{color:#40a070}.chroma .mi{color:#40a070}.chroma .il{color:#40a070}.chroma .mo{color:#40a070}.chroma .o{color:#666}.chroma .ow{color:#007020;font-weight:700}.chroma .c{color:#60a0b0;font-style:italic}.chroma .ch{color:#60a0b0;font-style:italic}.chroma .cm{color:#60a0b0;font-style:italic}.chroma .c1{color:#60a0b0;font-style:italic}.chroma .cs{color:#60a0b0;background-color:#fff0f0}.chroma .cp{color:#007020}.chroma .cpf{color:#007020}.chroma .gd{color:#a00000}.chroma .ge{font-style:italic}.chroma .gr{color:red}.chroma .gh{color:navy;font-weight:700}.chroma .gi{color:#00a000}.chroma .go{color:#888}.chroma .gp{color:#c65d09;font-weight:700}.chroma .gs{font-weight:700}.chroma .gu{color:purple;font-weight:700}.chroma .gt{color:#04d}.chroma .w{color:#bbb}</style></head><body><section id=nav><h1><a href=https://reorchestrate.com/>reorchestrate</a></h1><section class=section><div class=sub><p>&copy; Mike Seddon 2023 |
+<a href=https://www.github.com/seddonm1 target=_blank><svg width="22" height="22" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M896 128q209 0 385.5 103T1561 510.5 1664 896q0 251-146.5 451.5T1139 1625q-27 5-40-7t-13-30q0-3 .5-76.5t.5-134.5q0-97-52-142 57-6 102.5-18t94-39 81-66.5 53-105T1386 856q0-119-79-206 37-91-8-204-28-9-81 11t-92 44l-38 24q-93-26-192-26t-192 26q-16-11-42.5-27T578 459.5 493 446q-45 113-8 204-79 87-79 206 0 85 20.5 150t52.5 105 80.5 67 94 39 102.5 18q-39 36-49 103-21 10-45 15t-57 5-65.5-21.5T484 1274q-19-32-48.5-52t-49.5-24l-20-3q-21 0-29 4.5t-5 11.5 9 14 13 12l7 5q22 10 43.5 38t31.5 51l10 23q13 38 44 61.5t67 30 69.5 7 55.5-3.5l23-4q0 38 .5 88.5t.5 54.5q0 18-13 30t-40 7q-232-77-378.5-277.5T128 896q0-209 103-385.5T510.5 231 896 128zM419 1231q3-7-7-12-10-3-13 2-3 7 7 12 9 6 13-2zm31 34q7-5-2-16-10-9-16-3-7 5 2 16 10 10 16 3zm30 45q9-7 0-19-8-13-17-6-9 5 0 18t17 7zm42 42q8-8-4-19-12-12-20-3-9 8 4 19 12 12 20 3zm57 25q3-11-13-16-15-4-19 7t13 15q15 6 19-6zm63 5q0-13-17-11-16 0-16 11 0 13 17 11 16 0 16-11zm58-10q-2-11-18-9-16 3-14 15t18 8 14-14z"/></svg></a><a href=https://www.linkedin.com/in/mikeseddonau/ target=_blank><svg width="22" height="22" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M365 1414h231V720H365v694zm246-908q-1-52-36-86t-93-34-94.5 34-36.5 86q0 51 35.5 85.5T479 626h1q59 0 95-34.5t36-85.5zm585 908h231v-398q0-154-73-233t-193-79q-136 0-209 117h2V720H723q3 66 0 694h231v-388q0-38 7-56 15-35 45-59.5t74-24.5q116 0 116 157v371zm468-998v960q0 119-84.5 203.5T1376 1664H416q-119 0-203.5-84.5T128 1376V416q0-119 84.5-203.5T416 128h960q119 0 203.5 84.5T1664 416z"/></svg></a></p></div></section><ul></ul></section><section id=content><h1>AffineTransform Transformer for Apache Spark ML</h1><div id=sub-header>6 March 2016</div><div class=entry-content><p>Whilst playing with the MNIST dataset I found I needed a way of rotating images and so I decided to build an <a href=https://en.wikipedia.org/wiki/Affine_transformation>Affine Transform</a> Transformer for Apache Spark ML. I have implemented the basic Affine Transformation operations: <code>rotate</code>, <code>scaleX</code>, <code>scaleY</code>, <code>shearX</code>, <code>shearY</code>, <code>translateX</code>, <code>translateY</code>. Any pixel which exceeds the image dimensions will be discarded.I am sure the code could be improved but this is a good starting point.</p><p>To use this transformer I assume your data is <code>Dense</code> or <code>Sparse</code> <code>Vector</code> form where each pixel value is indexed. To perform the operations you need to provide the dimensions of the image with <code>Width</code> and <code>Height</code>, define the <code>Operation</code> and the <code>Factor</code>.</p><p>e.g. to <code>rotate</code> a <code>28</code>x<code>28</code> pixel image by <code>12.5°</code>:</p><div class=highlight><pre class=chroma><code class=language-scala data-lang=scala><span class=k>val</span> <span class=n>affineTransform</span> <span class=k>=</span> <span class=o>{</span> <span class=k>new</span> <span class=nc>AffineTransform</span><span class=o>()</span>
+  <span class=o>.</span><span class=n>setInputCol</span><span class=o>(</span><span class=n>assembler</span><span class=o>.</span><span class=n>getOutputCol</span><span class=o>)</span>
+  <span class=o>.</span><span class=n>setWidth</span><span class=o>(</span><span class=mi>28</span><span class=o>)</span>
+  <span class=o>.</span><span class=n>setHeight</span><span class=o>(</span><span class=mi>28</span><span class=o>)</span>
+  <span class=o>.</span><span class=n>setOperation</span><span class=o>(</span><span class=s>&#34;rotate&#34;</span><span class=o>)</span>
+  <span class=o>.</span><span class=n>setFactor</span><span class=o>(</span><span class=mf>12.5</span><span class=o>)</span>
+<span class=o>}</span></code></pre></div><p>If you are <code>translating</code> image pixels by a fixed amount then the <code>Factor</code> will be the number of pixels.</p><div class=highlight><pre class=chroma><code class=language-scala data-lang=scala><span class=k>val</span> <span class=n>affineTransform</span> <span class=k>=</span> <span class=o>{</span> <span class=k>new</span> <span class=nc>AffineTransform</span><span class=o>()</span>
+  <span class=o>.</span><span class=n>setInputCol</span><span class=o>(</span><span class=n>assembler</span><span class=o>.</span><span class=n>getOutputCol</span><span class=o>)</span>
+  <span class=o>.</span><span class=n>setWidth</span><span class=o>(</span><span class=mi>28</span><span class=o>)</span>
+  <span class=o>.</span><span class=n>setHeight</span><span class=o>(</span><span class=mi>28</span><span class=o>)</span>
+  <span class=o>.</span><span class=n>setOperation</span><span class=o>(</span><span class=s>&#34;translateX&#34;</span><span class=o>)</span>
+  <span class=o>.</span><span class=n>setFactor</span><span class=o>(</span><span class=mi>2</span><span class=o>)</span>
+<span class=o>}</span></code></pre></div><p>This implementation performs rotations by performing three <code>shear</code> operations which should prevent interpolation issues and follows a more <a href=https://en.wikipedia.org/wiki/Functional_programming>functional programming</a> approach.</p><p>Here is the full code:</p><div class=highlight><pre class=chroma><code class=language-scala data-lang=scala><span class=cm>/*
+</span><span class=cm> * Licensed to the Apache Software Foundation (ASF) under one or more
+</span><span class=cm> * contributor license agreements.  See the NOTICE file distributed with
+</span><span class=cm> * this work for additional information regarding copyright ownership.
+</span><span class=cm> * The ASF licenses this file to You under the Apache License, Version 2.0
+</span><span class=cm> * (the &#34;License&#34;); you may not use this file except in compliance with
+</span><span class=cm> * the License.  You may obtain a copy of the License at
+</span><span class=cm> *
+</span><span class=cm> *    http://www.apache.org/licenses/LICENSE-2.0
+</span><span class=cm> *
+</span><span class=cm> * Unless required by applicable law or agreed to in writing, software
+</span><span class=cm> * distributed under the License is distributed on an &#34;AS IS&#34; BASIS,
+</span><span class=cm> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+</span><span class=cm> * See the License for the specific language governing permissions and
+</span><span class=cm> * limitations under the License.
+</span><span class=cm> */</span>
+
+<span class=k>package</span> <span class=nn>org.apache.spark.ml.feature</span>
+
+<span class=k>import</span> <span class=nn>scala.collection.mutable.ArrayBuilder</span>
+
+<span class=k>import</span> <span class=nn>org.apache.spark.annotation.</span><span class=o>{</span><span class=nc>Since</span><span class=o>,</span> <span class=nc>Experimental</span><span class=o>}</span>
+<span class=k>import</span> <span class=nn>org.apache.spark.ml.Transformer</span>
+<span class=k>import</span> <span class=nn>org.apache.spark.ml.attribute.BinaryAttribute</span>
+<span class=k>import</span> <span class=nn>org.apache.spark.ml.param._</span>
+<span class=k>import</span> <span class=nn>org.apache.spark.ml.param.shared.</span><span class=o>{</span><span class=nc>HasInputCol</span><span class=o>,</span> <span class=nc>HasOutputCol</span><span class=o>}</span>
+<span class=k>import</span> <span class=nn>org.apache.spark.ml.util._</span>
+<span class=k>import</span> <span class=nn>org.apache.spark.sql._</span>
+<span class=k>import</span> <span class=nn>org.apache.spark.sql.functions._</span>
+<span class=k>import</span> <span class=nn>org.apache.spark.sql.types._</span>
+<span class=k>import</span> <span class=nn>org.apache.spark.mllib.linalg._</span>
+
+<span class=cm>/**
+</span><span class=cm> * :: Experimental ::
+</span><span class=cm> * Affine Transform a column of image features.
+</span><span class=cm> */</span>
+<span class=nd>@Experimental</span>
+<span class=k>final</span> <span class=k>class</span> <span class=nc>AffineTransform</span><span class=o>(</span><span class=k>override</span> <span class=k>val</span> <span class=n>uid</span><span class=k>:</span> <span class=kt>String</span><span class=o>)</span>
+  <span class=k>extends</span> <span class=nc>Transformer</span> <span class=k>with</span> <span class=nc>HasInputCol</span> <span class=k>with</span> <span class=nc>HasOutputCol</span> <span class=k>with</span> <span class=nc>DefaultParamsWritable</span> <span class=o>{</span>
+
+  <span class=k>def</span> <span class=k>this</span><span class=o>()</span> <span class=k>=</span> <span class=k>this</span><span class=o>(</span><span class=nc>Identifiable</span><span class=o>.</span><span class=n>randomUID</span><span class=o>(</span><span class=s>&#34;affineTransform&#34;</span><span class=o>))</span>
+
+  <span class=cm>/**
+</span><span class=cm>   * Param for the factor to pass to the manipulation function
+</span><span class=cm>   * Default: 1.0
+</span><span class=cm>   * @group param
+</span><span class=cm>   */</span>
+  <span class=k>val</span> <span class=n>factor</span><span class=k>:</span> <span class=kt>DoubleParam</span> <span class=o>=</span>
+    <span class=k>new</span> <span class=nc>DoubleParam</span><span class=o>(</span><span class=k>this</span><span class=o>,</span> <span class=s>&#34;factor&#34;</span><span class=o>,</span> <span class=s>&#34;factor to pass to the manipulation function&#34;</span><span class=o>)</span>
+
+  <span class=cm>/** @group getParam */</span>
+  <span class=k>def</span> <span class=n>getFactor</span><span class=k>:</span> <span class=kt>Double</span> <span class=o>=</span> <span class=n>$</span><span class=o>(</span><span class=n>factor</span><span class=o>)</span>
+
+  <span class=cm>/** @group setParam */</span>
+  <span class=k>def</span> <span class=n>setFactor</span><span class=o>(</span><span class=n>value</span><span class=k>:</span> <span class=kt>Double</span><span class=o>)</span><span class=k>:</span> <span class=kt>this.</span><span class=k>type</span> <span class=o>=</span> <span class=n>set</span><span class=o>(</span><span class=n>factor</span><span class=o>,</span> <span class=n>value</span><span class=o>)</span>
+
+  <span class=cm>/**
+</span><span class=cm>   * Param for the size of the width dimension in pixels
+</span><span class=cm>   * @group param
+</span><span class=cm>   */</span>
+  <span class=k>val</span> <span class=n>width</span><span class=k>:</span> <span class=kt>IntParam</span> <span class=o>=</span>
+    <span class=k>new</span> <span class=nc>IntParam</span><span class=o>(</span><span class=k>this</span><span class=o>,</span> <span class=s>&#34;width&#34;</span><span class=o>,</span> <span class=s>&#34;image width in pixels&#34;</span><span class=o>)</span>
+
+  <span class=cm>/** @group getParam */</span>
+  <span class=k>def</span> <span class=n>getWidth</span><span class=k>:</span> <span class=kt>Int</span> <span class=o>=</span> <span class=n>$</span><span class=o>(</span><span class=n>width</span><span class=o>)</span>
+
+  <span class=cm>/** @group setParam */</span>
+  <span class=k>def</span> <span class=n>setWidth</span><span class=o>(</span><span class=n>value</span><span class=k>:</span> <span class=kt>Int</span><span class=o>)</span><span class=k>:</span> <span class=kt>this.</span><span class=k>type</span> <span class=o>=</span> <span class=n>set</span><span class=o>(</span><span class=n>width</span><span class=o>,</span> <span class=n>value</span><span class=o>)</span>
+
+  <span class=cm>/**
+</span><span class=cm>   * Param for the size of the height dimension in pixels
+</span><span class=cm>   * @group param
+</span><span class=cm>   */</span>
+  <span class=k>val</span> <span class=n>height</span><span class=k>:</span> <span class=kt>IntParam</span> <span class=o>=</span>
+    <span class=k>new</span> <span class=nc>IntParam</span><span class=o>(</span><span class=k>this</span><span class=o>,</span> <span class=s>&#34;height&#34;</span><span class=o>,</span> <span class=s>&#34;image height in pixels&#34;</span><span class=o>)</span>
+
+  <span class=cm>/** @group getParam */</span>
+  <span class=k>def</span> <span class=n>getHeight</span><span class=k>:</span> <span class=kt>Int</span> <span class=o>=</span> <span class=n>$</span><span class=o>(</span><span class=n>height</span><span class=o>)</span>
+
+  <span class=cm>/** @group setParam */</span>
+  <span class=k>def</span> <span class=n>setHeight</span><span class=o>(</span><span class=n>value</span><span class=k>:</span> <span class=kt>Int</span><span class=o>)</span><span class=k>:</span> <span class=kt>this.</span><span class=k>type</span> <span class=o>=</span> <span class=n>set</span><span class=o>(</span><span class=n>height</span><span class=o>,</span> <span class=n>value</span><span class=o>)</span>
+
+  <span class=cm>/**
+</span><span class=cm>   * Param for the transformation operation to perform
+</span><span class=cm>   * @group param
+</span><span class=cm>   */</span>
+  <span class=k>val</span> <span class=n>operation</span><span class=k>:</span> <span class=kt>Param</span><span class=o>[</span><span class=kt>String</span><span class=o>]</span> <span class=k>=</span> <span class=o>{</span>
+    <span class=k>val</span> <span class=n>allowedParams</span> <span class=k>=</span> <span class=nc>ParamValidators</span><span class=o>.</span><span class=n>inArray</span><span class=o>(</span><span class=nc>Array</span><span class=o>(</span><span class=s>&#34;rotate&#34;</span><span class=o>,</span> <span class=s>&#34;scaleX&#34;</span><span class=o>,</span> <span class=s>&#34;scaleY&#34;</span><span class=o>,</span> <span class=s>&#34;shearX&#34;</span><span class=o>,</span> <span class=s>&#34;shearY&#34;</span><span class=o>,</span> <span class=s>&#34;translateX&#34;</span><span class=o>,</span> <span class=s>&#34;translateY&#34;</span><span class=o>))</span>
+    <span class=k>new</span> <span class=nc>Param</span><span class=o>(</span>
+      <span class=k>this</span><span class=o>,</span> <span class=s>&#34;operation&#34;</span><span class=o>,</span> <span class=s>&#34;the transformation to perform (rotate|scaleX|scaleY|shearX|shearY|translateX|translateY)&#34;</span><span class=o>,</span> <span class=n>allowedParams</span><span class=o>)</span>
+  <span class=o>}</span>
+
+  <span class=cm>/** @group getParam */</span>
+  <span class=k>def</span> <span class=n>getOperation</span><span class=k>:</span> <span class=kt>String</span> <span class=o>=</span> <span class=n>$</span><span class=o>(</span><span class=n>operation</span><span class=o>)</span>
+
+  <span class=cm>/** @group setParam */</span>
+  <span class=k>def</span> <span class=n>setOperation</span><span class=o>(</span><span class=n>value</span><span class=k>:</span> <span class=kt>String</span><span class=o>)</span><span class=k>:</span> <span class=kt>this.</span><span class=k>type</span> <span class=o>=</span> <span class=n>set</span><span class=o>(</span><span class=n>operation</span><span class=o>,</span> <span class=n>value</span><span class=o>)</span>
+
+  <span class=cm>/** @group setParam */</span>
+  <span class=k>def</span> <span class=n>setInputCol</span><span class=o>(</span><span class=n>value</span><span class=k>:</span> <span class=kt>String</span><span class=o>)</span><span class=k>:</span> <span class=kt>this.</span><span class=k>type</span> <span class=o>=</span> <span class=n>set</span><span class=o>(</span><span class=n>inputCol</span><span class=o>,</span> <span class=n>value</span><span class=o>)</span>
+
+  <span class=cm>/** @group setParam */</span>
+  <span class=k>def</span> <span class=n>setOutputCol</span><span class=o>(</span><span class=n>value</span><span class=k>:</span> <span class=kt>String</span><span class=o>)</span><span class=k>:</span> <span class=kt>this.</span><span class=k>type</span> <span class=o>=</span> <span class=n>set</span><span class=o>(</span><span class=n>outputCol</span><span class=o>,</span> <span class=n>value</span><span class=o>)</span>
+
+  <span class=k>class</span> <span class=nc>Point</span><span class=o>(</span><span class=n>index</span><span class=k>:</span> <span class=kt>Int</span><span class=o>)</span> <span class=k>extends</span> <span class=nc>Serializable</span> <span class=o>{</span>
+    <span class=k>var</span> <span class=n>x</span><span class=k>:</span> <span class=kt>Int</span> <span class=o>=</span> <span class=n>index</span> <span class=o>%</span> <span class=n>$</span><span class=o>(</span><span class=n>width</span><span class=o>)</span>
+    <span class=k>var</span> <span class=n>y</span><span class=k>:</span> <span class=kt>Int</span> <span class=o>=</span> <span class=n>index</span> <span class=o>/</span> <span class=n>$</span><span class=o>(</span><span class=n>width</span><span class=o>)</span> <span class=o>+</span> <span class=mi>1</span>
+
+    <span class=k>def</span> <span class=n>getIndex</span><span class=o>()</span><span class=k>:</span> <span class=kt>Int</span> <span class=o>=</span> <span class=n>x</span> <span class=o>+</span> <span class=o>(</span><span class=n>y</span> <span class=o>-</span> <span class=mi>1</span><span class=o>)</span> <span class=o>*</span> <span class=n>$</span><span class=o>(</span><span class=n>width</span><span class=o>)</span>
+
+    <span class=k>def</span> <span class=n>affineTransform</span><span class=o>(</span><span class=n>scaleX</span><span class=k>:</span> <span class=kt>Double</span><span class=o>,</span> <span class=n>shearX</span><span class=k>:</span> <span class=kt>Double</span><span class=o>,</span> <span class=n>translateX</span><span class=k>:</span> <span class=kt>Double</span><span class=o>,</span> <span class=n>scaleY</span><span class=k>:</span> <span class=kt>Double</span><span class=o>,</span> <span class=n>shearY</span><span class=k>:</span> <span class=kt>Double</span><span class=o>,</span> <span class=n>translateY</span><span class=k>:</span> <span class=kt>Double</span><span class=o>)</span> <span class=o>{</span>
+      <span class=n>x</span> <span class=k>=</span> <span class=nc>Math</span><span class=o>.</span><span class=n>round</span><span class=o>(</span><span class=n>scaleX</span> <span class=o>*</span> <span class=n>x</span><span class=o>.</span><span class=n>toDouble</span> <span class=o>+</span> <span class=n>shearX</span> <span class=o>*</span> <span class=n>y</span><span class=o>.</span><span class=n>toDouble</span> <span class=o>+</span> <span class=n>translateX</span><span class=o>).</span><span class=n>toInt</span>
+      <span class=n>y</span> <span class=k>=</span> <span class=nc>Math</span><span class=o>.</span><span class=n>round</span><span class=o>(</span><span class=n>scaleY</span> <span class=o>*</span> <span class=n>y</span><span class=o>.</span><span class=n>toDouble</span> <span class=o>+</span> <span class=n>shearY</span> <span class=o>*</span> <span class=n>x</span><span class=o>.</span><span class=n>toDouble</span> <span class=o>+</span> <span class=n>translateY</span><span class=o>).</span><span class=n>toInt</span>
+    <span class=o>}</span>
+
+    <span class=k>override</span> <span class=k>def</span> <span class=n>toString</span><span class=o>()</span><span class=k>:</span> <span class=kt>String</span> <span class=o>=</span> <span class=s>&#34;(&#34;</span> <span class=o>+</span> <span class=n>x</span> <span class=o>+</span> <span class=s>&#34;, &#34;</span> <span class=o>+</span> <span class=n>y</span> <span class=o>+</span> <span class=s>&#34;)&#34;</span>
+  <span class=o>}</span>
+
+  <span class=k>override</span> <span class=k>def</span> <span class=n>transform</span><span class=o>(</span><span class=n>dataset</span><span class=k>:</span> <span class=kt>DataFrame</span><span class=o>)</span><span class=k>:</span> <span class=kt>DataFrame</span> <span class=o>=</span> <span class=o>{</span>
+    <span class=k>val</span> <span class=n>outputSchema</span> <span class=k>=</span> <span class=n>transformSchema</span><span class=o>(</span><span class=n>dataset</span><span class=o>.</span><span class=n>schema</span><span class=o>)</span>
+    <span class=k>val</span> <span class=n>schema</span> <span class=k>=</span> <span class=n>dataset</span><span class=o>.</span><span class=n>schema</span>
+    <span class=k>val</span> <span class=n>inputType</span> <span class=k>=</span> <span class=n>schema</span><span class=o>(</span><span class=n>$</span><span class=o>(</span><span class=n>inputCol</span><span class=o>)).</span><span class=n>dataType</span>
+
+    <span class=k>val</span> <span class=n>t</span> <span class=k>=</span> <span class=n>udf</span> <span class=o>{</span> <span class=n>data</span><span class=k>:</span> <span class=kt>Vector</span> <span class=o>=&gt;</span>
+      <span class=k>val</span> <span class=n>indices</span> <span class=k>=</span> <span class=nc>ArrayBuilder</span><span class=o>.</span><span class=n>make</span><span class=o>[</span><span class=kt>Int</span><span class=o>]</span>
+      <span class=k>val</span> <span class=n>values</span> <span class=k>=</span> <span class=nc>ArrayBuilder</span><span class=o>.</span><span class=n>make</span><span class=o>[</span><span class=kt>Double</span><span class=o>]</span>
+
+      <span class=n>data</span><span class=o>.</span><span class=n>foreachActive</span> <span class=o>{</span> <span class=o>(</span><span class=n>index</span><span class=o>,</span> <span class=n>value</span><span class=o>)</span> <span class=k>=&gt;</span>
+        <span class=k>val</span> <span class=n>input</span><span class=k>:</span> <span class=kt>Point</span> <span class=o>=</span> <span class=k>new</span> <span class=nc>Point</span><span class=o>(</span><span class=n>index</span><span class=o>)</span>
+
+        <span class=k>val</span> <span class=n>output</span><span class=k>:</span> <span class=kt>Point</span> <span class=o>=</span> <span class=n>$</span><span class=o>(</span><span class=n>operation</span><span class=o>)</span> <span class=k>match</span> <span class=o>{</span>
+          <span class=k>case</span> <span class=s>&#34;rotate&#34;</span> <span class=k>=&gt;</span>
+            <span class=k>val</span> <span class=n>radians</span><span class=k>:</span> <span class=kt>Double</span> <span class=o>=</span> <span class=nc>Math</span><span class=o>.</span><span class=n>toRadians</span><span class=o>(</span><span class=n>$</span><span class=o>(</span><span class=n>factor</span><span class=o>))</span>
+            <span class=k>val</span> <span class=n>alpha</span><span class=k>:</span> <span class=kt>Double</span> <span class=o>=</span> <span class=o>-</span><span class=nc>Math</span><span class=o>.</span><span class=n>tan</span><span class=o>(</span><span class=n>radians</span><span class=o>/</span><span class=mi>2</span><span class=o>)</span>
+            <span class=k>val</span> <span class=n>beta</span><span class=k>:</span> <span class=kt>Double</span> <span class=o>=</span> <span class=nc>Math</span><span class=o>.</span><span class=n>sin</span><span class=o>(</span><span class=n>radians</span><span class=o>)</span>
+
+            <span class=c1>// offsets for rotation around center
+</span><span class=c1></span>            <span class=k>val</span> <span class=n>w</span><span class=k>:</span> <span class=kt>Double</span> <span class=o>=</span> <span class=n>$</span><span class=o>(</span><span class=n>width</span><span class=o>)/</span><span class=mi>2</span>
+            <span class=k>val</span> <span class=n>h</span><span class=k>:</span> <span class=kt>Double</span> <span class=o>=</span> <span class=n>$</span><span class=o>(</span><span class=n>height</span><span class=o>)/</span><span class=mi>2</span>
+
+            <span class=c1>// move pixels to allow rotation around center
+</span><span class=c1></span>            <span class=n>input</span><span class=o>.</span><span class=n>affineTransform</span><span class=o>(</span><span class=mi>1</span><span class=o>,</span><span class=mi>0</span><span class=o>,-</span><span class=n>w</span><span class=o>,</span><span class=mi>1</span><span class=o>,</span><span class=mi>0</span><span class=o>,-</span><span class=n>h</span><span class=o>)</span>
+            <span class=c1>// perform three shear rotations to prevent of interpolation issues
+</span><span class=c1></span>            <span class=n>input</span><span class=o>.</span><span class=n>affineTransform</span><span class=o>(</span><span class=mi>1</span><span class=o>,</span><span class=n>alpha</span><span class=o>,</span><span class=mi>0</span><span class=o>,</span><span class=mi>1</span><span class=o>,</span><span class=mi>0</span><span class=o>,</span><span class=mi>0</span><span class=o>)</span>
+            <span class=n>input</span><span class=o>.</span><span class=n>affineTransform</span><span class=o>(</span><span class=mi>1</span><span class=o>,</span><span class=mi>0</span><span class=o>,</span><span class=mi>0</span><span class=o>,</span><span class=mi>1</span><span class=o>,</span><span class=n>beta</span><span class=o>,</span><span class=mi>0</span><span class=o>)</span>
+            <span class=n>input</span><span class=o>.</span><span class=n>affineTransform</span><span class=o>(</span><span class=mi>1</span><span class=o>,</span><span class=n>alpha</span><span class=o>,</span><span class=mi>0</span><span class=o>,</span><span class=mi>1</span><span class=o>,</span><span class=mi>0</span><span class=o>,</span><span class=mi>0</span><span class=o>)</span>
+            <span class=c1>// reset rotated pixels back to original position
+</span><span class=c1></span>            <span class=n>input</span><span class=o>.</span><span class=n>affineTransform</span><span class=o>(</span><span class=mi>1</span><span class=o>,</span><span class=mi>0</span><span class=o>,</span><span class=n>w</span><span class=o>,</span><span class=mi>1</span><span class=o>,</span><span class=mi>0</span><span class=o>,</span><span class=n>h</span><span class=o>)</span>
+            <span class=n>input</span>
+          <span class=k>case</span> <span class=s>&#34;scaleX&#34;</span> <span class=k>=&gt;</span>
+            <span class=n>input</span><span class=o>.</span><span class=n>affineTransform</span><span class=o>(</span><span class=n>$</span><span class=o>(</span><span class=n>factor</span><span class=o>),</span><span class=mi>0</span><span class=o>,</span><span class=mi>0</span><span class=o>,</span><span class=mi>1</span><span class=o>,</span><span class=mi>0</span><span class=o>,</span><span class=mi>0</span><span class=o>)</span>
+            <span class=n>input</span>
+          <span class=k>case</span> <span class=s>&#34;scaleY&#34;</span> <span class=k>=&gt;</span>
+            <span class=n>input</span><span class=o>.</span><span class=n>affineTransform</span><span class=o>(</span><span class=mi>1</span><span class=o>,</span><span class=mi>0</span><span class=o>,</span><span class=mi>0</span><span class=o>,</span><span class=n>$</span><span class=o>(</span><span class=n>factor</span><span class=o>),</span><span class=mi>0</span><span class=o>,</span><span class=mi>0</span><span class=o>)</span>
+            <span class=n>input</span>
+          <span class=k>case</span> <span class=s>&#34;shearX&#34;</span> <span class=k>=&gt;</span>
+            <span class=n>input</span><span class=o>.</span><span class=n>affineTransform</span><span class=o>(</span><span class=mi>1</span><span class=o>,</span><span class=n>$</span><span class=o>(</span><span class=n>factor</span><span class=o>),</span><span class=mi>0</span><span class=o>,</span><span class=mi>1</span><span class=o>,</span><span class=mi>0</span><span class=o>,</span><span class=mi>0</span><span class=o>)</span>
+            <span class=n>input</span>
+          <span class=k>case</span> <span class=s>&#34;shearY&#34;</span> <span class=k>=&gt;</span>
+            <span class=n>input</span><span class=o>.</span><span class=n>affineTransform</span><span class=o>(</span><span class=mi>1</span><span class=o>,</span><span class=mi>0</span><span class=o>,</span><span class=mi>0</span><span class=o>,</span><span class=mi>1</span><span class=o>,</span><span class=n>$</span><span class=o>(</span><span class=n>factor</span><span class=o>),</span><span class=mi>0</span><span class=o>)</span>
+            <span class=n>input</span>
+          <span class=k>case</span> <span class=s>&#34;translateX&#34;</span> <span class=k>=&gt;</span>
+            <span class=n>input</span><span class=o>.</span><span class=n>affineTransform</span><span class=o>(</span><span class=mi>1</span><span class=o>,</span><span class=mi>0</span><span class=o>,</span><span class=n>$</span><span class=o>(</span><span class=n>factor</span><span class=o>),</span><span class=mi>1</span><span class=o>,</span><span class=mi>0</span><span class=o>,</span><span class=mi>0</span><span class=o>)</span>
+            <span class=n>input</span>
+          <span class=k>case</span> <span class=s>&#34;translateY&#34;</span> <span class=k>=&gt;</span>
+            <span class=n>input</span><span class=o>.</span><span class=n>affineTransform</span><span class=o>(</span><span class=mi>1</span><span class=o>,</span><span class=mi>0</span><span class=o>,</span><span class=mi>0</span><span class=o>,</span><span class=mi>1</span><span class=o>,</span><span class=mi>0</span><span class=o>,</span><span class=n>$</span><span class=o>(</span><span class=n>factor</span><span class=o>))</span>
+            <span class=n>input</span>
+        <span class=o>}</span>
+
+        <span class=c1>// drop any information outside image boundaries
+</span><span class=c1></span>        <span class=k>if</span> <span class=o>(</span><span class=n>output</span><span class=o>.</span><span class=n>x</span> <span class=o>&gt;=</span> <span class=mi>0</span> <span class=o>&amp;&amp;</span> <span class=n>output</span><span class=o>.</span><span class=n>x</span> <span class=o>&lt;</span> <span class=n>$</span><span class=o>(</span><span class=n>width</span><span class=o>)</span> <span class=o>&amp;&amp;</span> <span class=n>output</span><span class=o>.</span><span class=n>y</span> <span class=o>&gt;</span> <span class=mi>0</span> <span class=o>&amp;&amp;</span> <span class=n>output</span><span class=o>.</span><span class=n>y</span> <span class=o>&lt;=</span> <span class=n>$</span><span class=o>(</span><span class=n>height</span><span class=o>))</span> <span class=o>{</span>
+          <span class=n>indices</span> <span class=o>+=</span> <span class=n>output</span><span class=o>.</span><span class=n>getIndex</span><span class=o>()</span>
+          <span class=n>values</span> <span class=o>+=</span> <span class=n>value</span>
+        <span class=o>}</span>
+      <span class=o>}</span>
+
+      <span class=nc>Vectors</span><span class=o>.</span><span class=n>sparse</span><span class=o>(</span><span class=n>data</span><span class=o>.</span><span class=n>size</span><span class=o>,</span> <span class=n>indices</span><span class=o>.</span><span class=n>result</span><span class=o>(),</span> <span class=n>values</span><span class=o>.</span><span class=n>result</span><span class=o>()).</span><span class=n>compressed</span>
+    <span class=o>}</span>
+
+    <span class=k>val</span> <span class=n>metadata</span> <span class=k>=</span> <span class=n>outputSchema</span><span class=o>(</span><span class=n>$</span><span class=o>(</span><span class=n>outputCol</span><span class=o>)).</span><span class=n>metadata</span>
+    <span class=n>dataset</span><span class=o>.</span><span class=n>select</span><span class=o>(</span><span class=n>col</span><span class=o>(</span><span class=s>&#34;*&#34;</span><span class=o>),</span><span class=n>t</span><span class=o>(</span><span class=n>col</span><span class=o>(</span><span class=n>$</span><span class=o>(</span><span class=n>inputCol</span><span class=o>))).</span><span class=n>as</span><span class=o>(</span><span class=n>$</span><span class=o>(</span><span class=n>outputCol</span><span class=o>),</span> <span class=n>metadata</span><span class=o>))</span>
+  <span class=o>}</span>
+
+  <span class=k>override</span> <span class=k>def</span> <span class=n>transformSchema</span><span class=o>(</span><span class=n>schema</span><span class=k>:</span> <span class=kt>StructType</span><span class=o>)</span><span class=k>:</span> <span class=kt>StructType</span> <span class=o>=</span> <span class=o>{</span>
+    <span class=n>validateParams</span><span class=o>()</span>
+    <span class=nc>SchemaUtils</span><span class=o>.</span><span class=n>checkColumnType</span><span class=o>(</span><span class=n>schema</span><span class=o>,</span> <span class=n>$</span><span class=o>(</span><span class=n>inputCol</span><span class=o>),</span> <span class=k>new</span> <span class=nc>VectorUDT</span><span class=o>)</span>
+    <span class=k>val</span> <span class=n>outputColName</span> <span class=k>=</span> <span class=n>$</span><span class=o>(</span><span class=n>outputCol</span><span class=o>)</span>
+
+    <span class=k>if</span> <span class=o>(</span><span class=n>schema</span><span class=o>.</span><span class=n>fieldNames</span><span class=o>.</span><span class=n>contains</span><span class=o>(</span><span class=n>outputColName</span><span class=o>))</span> <span class=o>{</span>
+      <span class=k>throw</span> <span class=k>new</span> <span class=nc>IllegalArgumentException</span><span class=o>(</span><span class=s>s&#34;Output column </span><span class=si>$outputColName</span><span class=s> already exists.&#34;</span><span class=o>)</span>
+    <span class=o>}</span>
+
+    <span class=k>var</span> <span class=n>outCol</span> <span class=k>=</span> <span class=k>new</span> <span class=nc>StructField</span><span class=o>(</span><span class=n>outputColName</span><span class=o>,</span> <span class=k>new</span> <span class=nc>VectorUDT</span><span class=o>,</span> <span class=kc>true</span><span class=o>)</span>
+
+    <span class=nc>StructType</span><span class=o>(</span><span class=n>schema</span><span class=o>.</span><span class=n>fields</span> <span class=k>:</span><span class=kt>+</span> <span class=kt>outCol</span><span class=o>)</span>
+  <span class=o>}</span>
+
+  <span class=k>override</span> <span class=k>def</span> <span class=n>copy</span><span class=o>(</span><span class=n>extra</span><span class=k>:</span> <span class=kt>ParamMap</span><span class=o>)</span><span class=k>:</span> <span class=kt>AffineTransform</span> <span class=o>=</span> <span class=n>defaultCopy</span><span class=o>(</span><span class=n>extra</span><span class=o>)</span>
+<span class=o>}</span>
+
+<span class=nd>@Since</span><span class=o>(</span><span class=s>&#34;1.6.0&#34;</span><span class=o>)</span>
+<span class=k>object</span> <span class=nc>AffineTransform</span> <span class=k>extends</span> <span class=nc>DefaultParamsReadable</span><span class=o>[</span><span class=kt>AffineTransform</span><span class=o>]</span> <span class=o>{</span>
+
+  <span class=nd>@Since</span><span class=o>(</span><span class=s>&#34;1.6.0&#34;</span><span class=o>)</span>
+  <span class=k>override</span> <span class=k>def</span> <span class=n>load</span><span class=o>(</span><span class=n>path</span><span class=k>:</span> <span class=kt>String</span><span class=o>)</span><span class=k>:</span> <span class=kt>AffineTransform</span> <span class=o>=</span> <span class=k>super</span><span class=o>.</span><span class=n>load</span><span class=o>(</span><span class=n>path</span><span class=o>)</span>
+<span class=o>}</span></code></pre></div></div><div id=links><a class="basic-alignment left" href=https://reorchestrate.com/posts/date-hierarchy-for-neo4j/>&laquo; A Date Hierarchy for Neo4j</a>
+<a class="basic-alignment left" href=https://reorchestrate.com/posts/using-apache-spark-neural-networks-to-recognise-digits-copy/>Using Apache Spark Neural Networks to Recognise Digits &raquo;</a></div></section></body></html>
