@@ -55,7 +55,7 @@
 </code></pre></div><p>Then reduce the list of points to calculate the total distance.</p><div class=highlight><pre class=chroma><code class=language-js data-lang=js><span class=c1>// calculate the total length of a set of input features in canadian football fields
 </span><span class=c1></span><span class=kd>function</span> <span class=nx>calculate</span><span class=p>(</span><span class=nx>data</span><span class=p>)</span> <span class=p>{</span>
   <span class=c1>// canadian football fields are 140 meters
-</span><span class=c1></span>  <span class=k>const</span> <span class=nx>candadian_football_field</span> <span class=o>=</span> <span class=mi>140</span><span class=p>;</span>
+</span><span class=c1></span>  <span class=k>const</span> <span class=nx>canadian_football_field</span> <span class=o>=</span> <span class=mi>140</span><span class=p>;</span>
 
   <span class=k>return</span> <span class=nx>data</span><span class=p>.</span><span class=nx>features</span><span class=p>.</span><span class=nx>reduce</span><span class=p>(</span>
     <span class=p>(</span><span class=nx>accumulator</span><span class=p>,</span> <span class=nx>currentValue</span><span class=p>,</span> <span class=nx>currentIndex</span><span class=p>,</span> <span class=nx>array</span><span class=p>)</span> <span class=p>=&gt;</span> <span class=p>{</span>
@@ -69,7 +69,7 @@
           <span class=nx>previousValue</span><span class=p>.</span><span class=nx>geometry</span><span class=p>.</span><span class=nx>coordinates</span><span class=p>[</span><span class=mi>1</span><span class=p>],</span>
           <span class=nx>previousValue</span><span class=p>.</span><span class=nx>geometry</span><span class=p>.</span><span class=nx>coordinates</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span>
         <span class=p>);</span>
-        <span class=k>return</span> <span class=nx>accumulator</span> <span class=o>+</span> <span class=nx>dist</span> <span class=err>/ candadian_football_field;</span>
+        <span class=k>return</span> <span class=nx>accumulator</span> <span class=o>+</span> <span class=nx>dist</span> <span class=err>/ canadian_football_field;</span>
       <span class=p>}</span>
     <span class=p>},</span>
     <span class=mi>0</span>
