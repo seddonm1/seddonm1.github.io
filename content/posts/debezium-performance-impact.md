@@ -11,21 +11,21 @@ Whilst its primary function is to replicate change events in near-realtime from 
 
 The biggest problem with Debezium that I have encountered comes from Database Administrators who raise the logical question: will this impact the performance of the database?
 
-# Conclusion
+## Conclusion
 
 I was not able to measure significant CPU Utilisation impact on a MySQL database under load with Debezium enabled vs with Debezium disabled.
 
-# Hypothesis
+## Hypothesis
 
 Given that Debezium reuses the database logs (e.g. the [binlog](https://dev.mysql.com/doc/internals/en/binary-log-overview.html) for MySQL or [write-ahead-log](https://www.postgresql.org/docs/current/wal.html) for Postgres) which are already a key component of any online transaction processing (OLTP) database there should be minimal performance impact by enabling Debezium.
 
 Additionally, from desktop research, there seems to be very little discussion on Github/forums regarding any performance impact indicating this is not a problem.
 
-# Experiment
+## Experiment
 
 The experiment was created to measure the CPU utilisation whilst running with limited online-transaction-processing (OTLP) read/write load (i.e. not an idle database) with and without Debezium running.
 
-## Setup
+### Setup
 
 **Database:** MySQL 5.7 running on Google Cloud SQL on `db-n1-standard-4` instance (4 vCPUs, 15 GB Memory, 100 GB SSD).
 
@@ -80,7 +80,7 @@ This configuration produces a 30 minute execution with 4 OLTP threads (creating 
 
 **Measurement:** The measurements were recorded by https://cloud.google.com/monitoring/ metrics which are automatically enabled for all Cloud SQL instances and records Average CPU Utilisation by 1 minute window.
 
-## Findings
+### Findings
 
 This chart shows the CPU utilisation under two discrete scenarios.
 
@@ -91,10 +91,10 @@ This chart shows the CPU utilisation under two discrete scenarios.
 
 This chart has been configured to ‘overlay' the runs to show the CPU utilisation at the same minute into the benchmark execution.
 
-## Consumption
+### Consumption
 
 If you are struggling to process the events produced by Debezium then try the [Arc plugin](https://arc.tripl.ai/transform/#debeziumtransform) that allows you to safely consume and reproduce the state of your source table at a point in time.
 
-#### Updates
+##### Updates
 
 Updated 2021-03-04 to clarify binlog/write-ahead-log vs transaction log language and fix some language.

@@ -17,11 +17,11 @@ With that in mind, my ideal requirements for a plugin system are:
 
 While a lot of [excellent articles](https://nullderef.com/blog/plugin-tech/) have been written on the topic the purpose of this post is to explore the performance of a WebAssembly and specifically a [WebAssembly System Interface](https://wasi.dev/) (WASI) approach.
 
-# WebAssembly and WebAssembly System Interface
+## WebAssembly and WebAssembly System Interface
 
 Despite the name, [WebAssembly](https://en.wikipedia.org/wiki/WebAssembly) is better thought of as a portable binary-code format that can produced by many languages and run in a virtual machine - the `Web` part is a bit of a misnomer as browsers have just one implementation of the virtual machine. Rust already has an excellent and well supported library [wasmtime](https://github.com/bytecodealliance/wasmtime) that implements a virtual machine/sandbox that is able to interpet a compiled `WASM` module and execute it. `wasmtime` also implements the [WebAssembly System Interface](https://wasi.dev/) specification allowing explicit permissions to access host resources such as access to the host filesystem.
 
-# Arbitrary Code Execution
+## Arbitrary Code Execution
 
 To meet the first requirement, arbitrary code execution, we need some sort of interpreter that is able to be run within the Rust binary and be called with an instruction provided by the user that it executes and returns a response - a [scripting language](https://en.wikipedia.org/wiki/Scripting_language). While it is tempting to consider a language like [Lua](<https://en.wikipedia.org/wiki/Lua_(programming_language)>) which is almost ideal for this purpose instead I am limiting this search to either [Python](<https://en.wikipedia.org/wiki/Python_(programming_language)>) or [JavaScript](https://en.wikipedia.org/wiki/JavaScript) both due to their ubiquity (extremly easy to find developers) and easy integration with WebAssembly.
 
@@ -29,11 +29,11 @@ Whilst Python is now able to be built for WebAssembly (see https://github.com/si
 
 Instead I am focusing on a comparatively tiny JavaScript interpreter called [QuickJS](https://bellard.org/quickjs/) which is relatively tiny at ~1MB and still passes [nearly 100%](https://test262.report/) of the ECMAScript Test Suite. [Shopify](https://www.shopify.com/), via the [javy](https://github.com/Shopify/javy) project have created excellent Rust bindings [quickjs-wasm-sys](https://github.com/Shopify/javy/tree/main/crates/quickjs-wasm-sys) and [quickjs-wasm-rs](https://github.com/Shopify/javy/tree/main/crates/quickjs-wasm-rs) which allow `QuickJS` to be build for the `WASI` target with minimal effort and, as we will explore below, offer some additional useful features for interacting with QuickJS.
 
-# Performance
+## Performance
 
 Now we have selected a chosen runtime (`wasmtime`) and interpreter (`quickjs`) we now need to test whether that combination can meet our performance requirements.
 
-## Some Arbitrary Code
+### Some Arbitrary Code
 
 To be somewhat realistic we need a contrived example of some code to execute in the plugin.
 
@@ -129,7 +129,7 @@ function calculate(data) {
 }
 ```
 
-## WASM Interfacing
+### WASM Interfacing
 
 It is still somewhat difficult to get data in and out of a `WASM` virtual machine as it does not directly expose use of all of the [types](https://webassembly.github.io/spec/core/syntax/types.html) you may be used to. Thanks to an excellent blog post by [Peter Malmgren](https://petermalmgren.com/serverside-wasm-data/) who explores different options for passing data into a WASM instance I have implemented his 'Approach 2: Using exported functions and memory' pattern. The benefit of this approach is that it allows the the virtual machine `stdout` and `stderr` to be disabled and it is easy to add additional host functions to expose to the WASM instance.
 
@@ -146,7 +146,7 @@ You can see the code for the two halves of the interface code here:
 - [WASM](https://github.com/seddonm1/quickjs/blob/e9d8afd6e8f74d41e674a30821a344d3423b8260/crates/quickjs-wasm/src/io.rs) interface code.
 - Host [wasmtime](https://github.com/seddonm1/quickjs/blob/e9d8afd6e8f74d41e674a30821a344d3423b8260/crates/quickjs/src/lib.rs#L65) interface code.
 
-## Baseline
+### Baseline
 
 The initial naive implementation is to instantiate a new QuickJS `Context`, retrieve the input string from the host, execute it and return the output. This is executing in `8.2ms` per iteration which is definitely not quick. The benchmarks below were run using [this code](https://github.com/seddonm1/quickjs/blob/e9d8afd6e8f74d41e674a30821a344d3423b8260/crates/quickjs/benches/benchmark.rs).
 
@@ -183,7 +183,7 @@ fn main() -> Result<()> {
 }
 ```
 
-## Wizer
+### Wizer
 
 In this 2021 post [Making JavaScript run fast on WebAssembly](https://bytecodealliance.org/articles/making-javascript-run-fast-on-webassembly) Mozilla introduced the idea of taking snapshots of a WASM virtual machine state allowing work to be performed at WASM 'compile' time rather than at run time. In this case we know we need a QuickJS `Context` each execution so if we were able to instantiate this once rather than in each execution then there should be some performance improvenment. A tool called [Wizer](https://github.com/bytecodealliance/wizer) has been built to achieve this.
 
@@ -215,7 +215,7 @@ fn main() -> Result<()> {
     let context = unsafe { JS_CONTEXT.get().unwrap() };
 ```
 
-## Wizer+
+### Wizer+
 
 Given that the QuickJS `Context` does not improve the `8.1ms` execution time, what would happen if we could move more logic into the `wizer.initialize` code like registering the `distance` and `calculate` functions as it must take at least some time for QuickJS to parse the string representation into internal binary code?
 
@@ -230,7 +230,7 @@ Found 4 outliers among 100 measurements (4.00%)
   2 (2.00%) high severe
 ```
 
-## Calculation or Parsing?
+### Calculation or Parsing?
 
 At this stage we have eliminated the QuickJS `Context` and `wizer.initialize`ing the `distance` and `calculate` functions as the source of slowness leaving two remaining candidates as the source of the poor performance; getting the `data` object into QuickJS and the actual calculation time. The easiest way to test this is to also move the `data` element into the `wizer.initialize` function so that the script execution is running against already instantiated data.
 
@@ -251,7 +251,7 @@ Code:
 calculate(data);
 ```
 
-## Javy to the rescue
+### Javy to the rescue
 
 At this stage we can re-examine at the `Javy` code and see that a lot of the work they have done appears to have followed this same process. The `quickjs-wasm-rs` package has the `json` or `msgpack` feature flags which enable different serialization options for getting data in and out of the QuickJS `Context`. These functions construct the QuickJS `Value` objects directly from an input `json` string (or serialized `msgpack` bytes) rather than relying on the QuickJS parser to parse the 100KB+ input string.
 
@@ -266,7 +266,7 @@ Found 6 outliers among 100 measurements (6.00%)
   2 (2.00%) high severe
 ```
 
-## Parallel
+### Parallel
 
 Finally we will explore parallelization with the excellent [rayon](https://github.com/rayon-rs/rayon) libary. As each execution is running in a single thread and each execution is a pure function we can easily run them in parallel - which may or may not make sense for your use case. Some care needs to be taken here as instantiating a Rayon task per execution does incur quite a lot of scheduling cost so `chunk`ing into partitions and executing in parallel gives best results.
 
@@ -285,7 +285,7 @@ The sequential example is also available via:
 cargo run --release --example iter
 ```
 
-# Conclusion
+## Conclusion
 
 In this series of steps I have demonstrated a plugin system for Rust that meets my goals of arbitrary code execution in a sandboxed environment at a _reasonable_ `2.5ms` execution speed.
 
