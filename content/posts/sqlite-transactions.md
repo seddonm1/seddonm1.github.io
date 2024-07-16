@@ -153,18 +153,18 @@ The code has been written to start up `n` threads that will try to execute as ma
 - In all cases the code has been written to retry on `SQLITE_BUSY`.
 - Each transaction has been written to be idempotent so the `Scan` and `Update` parameters are generated outside of the retry loop to simulate how an automatic retry might operate.
 
-The final piece of setup is to control the file location to protect a solid-state-drive. This command on MacOS will create a *16*G ramdisk mounted at `/Volumes/ramdisk`. Calculated by RAM in MB (8192) * 2048.
+The final piece of setup is to control the file location to protect a solid-state-drive. This command on MacOS will create a 16G ramdisk mounted at `/Volumes/ramdisk`. Calculated by RAM in MB (16384) * 2048.
 
 
 ```bash
-diskutil erasevolume apfs 'ramdisk' `hdiutil attach -nobrowse -nomount ram://16777216`
+diskutil erasevolume apfs 'ramdisk' `hdiutil attach -nobrowse -nomount ram://33554432`
 ```
 
 Or Linux:
 
 ```bash
 sudo mkdir -p /mnt/ramdisk
-sudo mount -t tmpfs -o size=8g tmpfs /mnt/ramdisk
+sudo mount -t tmpfs -o size=16g tmpfs /mnt/ramdisk
 ```
 
 
