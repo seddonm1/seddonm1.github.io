@@ -235,7 +235,7 @@ Firstly, the absolute numbers here are not the purpose of this exercise. These s
 
 - A multi-platform Docker image is available at: [ghcr.io/seddonm1/sqlite-bench:0.1.0](https://github.com/users/seddonm1/packages/container/package/sqlite-bench).
 - This code has been pushed https://github.com/seddonm1/sqlite-bench.
-- The excellent https://github.com/rusqlite/rusqlite has been forked to make the minor changes required to build the SQLite [begin-concurrent](https://www.sqlite.org/src/info/e3f8c70ef5a7349c) branch at version 3.46.0. To see the modifications see: https://github.com/rusqlite/rusqlite/compare/master...seddonm1:rusqlite:begin-concurrent
+- The excellent https://github.com/rusqlite/rusqlite has been forked to make the minor changes required to build the SQLite [begin-concurrent](https://www.sqlite.org/src/info/e3f8c70ef5a7349c) branch at version 3.46.0. To see the modifications see this [compare](https://github.com/rusqlite/rusqlite/compare/eebbbb008633b36f2580b29501800fb8bc37e36a...seddonm1:rusqlite:begin-concurrent).
 
 
 ## Futher Reading
