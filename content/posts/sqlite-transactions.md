@@ -7,9 +7,9 @@ tags: ["development", "sqlite", "rust"]
 
 ## What is SQLite?
 
-In the past few years [SQLite](https://www.sqlite.org/) (not SQL-light) has had a surge of popularity as people have come to realise its power as an in-process, highly reliable SQL database engine as a backend for server processes rather than its traditional role of client or edge applications. This change in stance for SQLite has happend despite the authors almost [actively discouraging](https://www.sqlite.org/whentouse.html#checklist_for_choosing_the_right_database_engine) its use for this purpose.
+In the past few years [SQLite](https://www.sqlite.org/) (not SQL-light) has had a surge of popularity as people have come to realise its power as an in-process, highly reliable SQL database engine as a backend for server processes rather than its traditional role of client or edge applications. This change in stance for SQLite has happened despite the authors almost [actively discouraging](https://www.sqlite.org/whentouse.html#checklist_for_choosing_the_right_database_engine) its use for this purpose.
 
-I am interested in SQLite for the some key reasons:
+I am interested in SQLite for some key reasons:
 
 - It is conceptually simple: Imagine a [B-tree](https://en.wikipedia.org/wiki/B-tree) of rows/tuples partitioned by a table's primary key that has been [exhaustively tested](https://www.sqlite.org/testing.html) to persist that data to disk reliably, then add a [SQL](https://en.wikipedia.org/wiki/SQL) interaction layer.
 - Is able to have practical backup strategy via [Litestream](https://litestream.io/) that will perform backups and continuous replication of the write-ahead-log to a remote location. The backups are then able to be automatically restored on startup with a [trivial command](https://litestream.io/reference/restore/). Does your business really need the 99.99% uptime offered by expensive cloud managed databases like [AWS](https://aws.amazon.com/rds/aurora/), [Azure](https://azure.microsoft.com/en-us/products/azure-sql/) or [Google](https://cloud.google.com/sql/postgresql)?
@@ -18,9 +18,9 @@ I am interested in SQLite for the some key reasons:
 
 ## The single-writer limitation
 
-The limitations of SQLite on servers has been [well documented](https://www.sqlite.org/whentouse.html#situations_where_a_client_server_rdbms_may_work_better) by the SQLite authors and the best [server side configurations](https://kerkour.com/sqlite-for-servers) disected, however the standout limitation is *high-volume websites* by which they mean *write-heavy websites*.
+The limitations of SQLite on servers has been [well documented](https://www.sqlite.org/whentouse.html#situations_where_a_client_server_rdbms_may_work_better) by the SQLite authors and the best [server side configurations](https://kerkour.com/sqlite-for-servers) dissected, however the standout limitation is *high-volume websites* by which they mean *write-heavy websites*.
 
-In [Write-Ahead Logging](https://www.sqlite.org/wal.html) mode (required by Litestream) SQLite employs a single writer by [design](https://www.sqlite.org/wal.html#concurrency) which allows at most one write transaction but many read-only transactions to run concurrently. This design places the bottleneck of a *high-volume write-heavy website* squarely on how to manage throughput on that single writer... and that brings us back to one of the core building-blocks of modern technology:
+In [Write-Ahead Logging](https://www.sqlite.org/wal.html) mode (required by Litestream) SQLite employs a single writer by [design](https://www.sqlite.org/wal.html#concurrency) which allows at most one write transaction but many read-only transactions to run concurrently. This design places the bottleneck of a *high-volume write-heavy websites* squarely on how to manage throughput on that single writer... and that brings us back to one of the core building-blocks of modern technology:
 
 ## ACID
 
@@ -28,7 +28,7 @@ If you have forgotten about the [Atomic](https://en.wikipedia.org/wiki/Atomicity
 
 ### SQLite
 
-SQLite, [by default](https://sqlite.org/isolation.html), offers strict `SERIALIZABLE` [Isolated](https://en.wikipedia.org/wiki/Isolation_(database_systems)) transactions which is the strongest isolation guarantee (unless certain conditions are met: https://sqlite.org/isolation.html). By employing a single-writer, SQLite is using a form of [Pessimistic concurrencly control](https://en.wikipedia.org/wiki/Concurrency_control#Categories) that makes it easy to guarantee that the underlying data has not changed whilst the write-transaction is in progress.
+SQLite, [by default](https://sqlite.org/isolation.html), offers strict `SERIALIZABLE` [Isolated](https://en.wikipedia.org/wiki/Isolation_(database_systems)) transactions which is the strongest isolation guarantee (unless certain conditions are met: https://sqlite.org/isolation.html). By employing a single-writer, SQLite is using a form of [Pessimistic concurrency control](https://en.wikipedia.org/wiki/Concurrency_control#Categories) that makes it easy to guarantee that the underlying data has not changed whilst the write-transaction is in progress.
 
 ### Postgres
 
@@ -40,13 +40,13 @@ If set to [SERIALIZABLE](https://www.postgresql.org/docs/current/transaction-iso
 
 Transactions are not just limited to [Relational databases](https://en.wikipedia.org/wiki/Relational_database). FoundationDB, in my view one of the finest open-source projects (that incidentally has used SQLite's storage code for many years), also employs [optimistic-concurrency control](https://en.wikipedia.org/wiki/Optimistic_concurrency_control) to achieve `SERIALIZABLE` guarantees across a distributed key-value store. At the time when NoSQL came onto the scene, distributed NoSQL stores with ACID guarantees were not common and FoundationDB wrote the [Transaction Manifesto](https://apple.github.io/foundationdb/transaction-manifesto.html) to highlight how greatly the developer can benefit from the ACID guarantees.
 
-FoundationDB goes one-step further and offers advice on how to write code for [optimistic-concurrency control](https://en.wikipedia.org/wiki/Optimistic_concurrency_control) and the fact that sometimes data *will* change in reponse to a concurrent transaction conflict and the transaction is automatically retried:
+FoundationDB goes one-step further and offers advice on how to write code for [optimistic-concurrency control](https://en.wikipedia.org/wiki/Optimistic_concurrency_control) and the fact that sometimes data *will* change in response to a concurrent transaction conflict and the transaction is automatically retried:
 
 ## Idempotence
 
 > An idempotent transaction is one that has the same effect when committed twice as when committed once. -- FoundationDB
 
-In [making any transaction idempotent](https://apple.github.io/foundationdb/developer-guide.html#developer-guide-unknown-results) FoundationDB provides patterns for how to avoid issues if a transaction needs to retried multiple times due to a conflict. Things like avoiding creating random identifiers inside the transaction might be immediately recognisable to [functional programmers](https://en.wikipedia.org/wiki/Pure_function) but logic to guard against a state that may have changed since the intial execution may not be immediately obvious:
+In [making any transaction idempotent](https://apple.github.io/foundationdb/developer-guide.html#developer-guide-unknown-results) FoundationDB provides patterns for how to avoid issues if a transaction needs to retried multiple times due to a conflict. Things like avoiding creating random identifiers inside the transaction might be immediately recognizable to [functional programmers](https://en.wikipedia.org/wiki/Pure_function) but logic to guard against a state that may have changed since the intial execution may not be immediately obvious:
 
 ```python
 # Increases account balance and stores a record of the deposit with a unique depositId
@@ -189,7 +189,7 @@ This write-only batched transaction shows:
 ### nUpdate=1, nScan=10
 ![Update 1 / Scan 10](/img/2024/sqlite_n_update_1_n_scan_10.svg)
 
-This transaction should should expose the weakness of the `page` level `CONCURRENT` locking as the random reads should increase collisions:
+This transaction should expose the weakness of the `page` level `CONCURRENT` locking as the random reads should increase collisions:
 
 - `IMMEDIATE`, `DEFERRED` and `CONCURRENT` all slowed around 5% vs `nUpdate=1, nScan=0` at `16` threads.
 - For `CONCURRENT` this is due to the fact that underlying collisions did not actually increase very much. See discussion below.
@@ -204,7 +204,7 @@ This test does not show anything of significance compared with what we have alre
 
 This read-only batched transaction shows:
 
-- `IMMEDIATE` vs `DEFERRED` shows the impact of [Pessimistic concurrencly control](https://en.wikipedia.org/wiki/Concurrency_control#Categories) and why you should not default to `IMMEDIATE` for all transactions.
+- `IMMEDIATE` vs `DEFERRED` shows the impact of [Pessimistic concurrency control](https://en.wikipedia.org/wiki/Concurrency_control#Categories) and why you should not default to `IMMEDIATE` for all transactions.
 - `CONCURRENT` vs `DEFERRED` indicates there is not really a downside to using `CONCURRENT` mode as a default for all transactions as it performs the same or slightly better in all cases.
 
 ## Discussion
@@ -224,7 +224,7 @@ This chart shows the number of retried transactions per second when executing wi
 
 ![Update 10 / Scan 10](/img/2024/sqlite_n_update_10_n_scan_10_retries.svg)
 
-- These tests perform updates over those ~80k pages so the probability of collision is low. If you reduce the number of rows in the table or change your sampling to something that is skewed like most recent records then the chance of collions goes up. See [this article](https://sqlite.org/src/doc/begin-concurrent/doc/begin_concurrent.md) for programming notes which advises explicitly against using integer `ROWID` tables to try to reduce data locality issues.
+- These tests perform updates over those ~80k pages so the probability of collision is low. If you reduce the number of rows in the table or change your sampling to something that is skewed like most recent records then the chance of collisions goes up. See [this article](https://sqlite.org/src/doc/begin-concurrent/doc/begin_concurrent.md) for programming notes which advises explicitly against using integer `ROWID` tables to try to reduce data locality issues.
 - Each row should be a maximum of 336 bytes made up of 8 bytes (`INTEGER` is variable-length encoded) + 200 bytes (`BLOB` raw encoding) + 128 bytes (`TEXT` is `UTF-8` encoded). This means that one `4096` byte page will have a maximum of `12` rows (before overhead). Based on this we expect ~80k pages are used to store the 1 million rows.
 - Interestingly, if the number of rows seeded is reduced to `1000` then the time to persist the data is so fast that collisions actually reduce despite the higher probability of a conflict.
 
@@ -238,7 +238,7 @@ Firstly, the absolute numbers here are not the purpose of this exercise. These s
 - The excellent https://github.com/rusqlite/rusqlite has been forked to make the minor changes required to build the SQLite [begin-concurrent](https://www.sqlite.org/src/info/e3f8c70ef5a7349c) branch at version 3.46.0. To see the modifications see this [compare](https://github.com/rusqlite/rusqlite/compare/eebbbb008633b36f2580b29501800fb8bc37e36a...seddonm1:rusqlite:begin-concurrent).
 
 
-## Futher Reading
+## Further Reading
 
 - https://fly.io/blog/all-in-on-sqlite-litestream/
 - https://kerkour.com/sqlite-for-servers
