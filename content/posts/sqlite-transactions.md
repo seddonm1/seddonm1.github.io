@@ -75,7 +75,7 @@ It is worth mentioning the `SQLITE_BUSY_TIMEOUT` parameter that is configurable 
 
 ### DEFERRED
 
-Deferred means that the transaction will be started in `READ` mode that can run concurrently with any existing read or write transactions and will only be upgraded to a blocking `READ-WRITE` transction if a query that modifies the database state is executed (like `INSERT`, `UPDATE` or `DELETE`).  If at the time of upgrade the database is locked by another transaction (plus `SQLITE_BUSY_TIMEOUT`) then a `SQLITE_BUSY` error will be returned and it is up to the client to handle it (e.g. fail/retry).
+Deferred means that the transaction will be started in `READ` mode that can run concurrently with any existing read or write transactions and will only be upgraded to a blocking `READ-WRITE` transaction if a query that modifies the database state is executed (like `INSERT`, `UPDATE` or `DELETE`).  If at the time of upgrade the database is locked by another transaction then a `SQLITE_BUSY` error will be returned and it is up to the client to handle it (e.g. fail/retry). Note that this state cannot be resolved by waiting so `SQLITE_BUSY_TIMEOUT` does not apply.
 
 ### IMMEDIATE
 
