@@ -191,8 +191,8 @@ This write-only batched transaction shows:
 
 This transaction should expose the weakness of the `page` level `CONCURRENT` locking as the random reads should increase collisions:
 
-- `IMMEDIATE`, `DEFERRED` and `CONCURRENT` all slowed around 5% vs `nUpdate=1, nScan=0` at `16` threads.
-- For `CONCURRENT` this is due to the fact that underlying collisions did not actually increase very much. See discussion below.
+- This immediately shows why using `IMMEDIATE` for any transaction that will update is important vs the cost of upgrading a `DEFERRED` transaction.
+- For `CONCURRENT` the fact that these results are so solid is due to the fact that underlying collisions did not actually increase very much. See discussion below.
 
 ### nUpdate=10, nScan=10
 ![Update 10 / Scan 10](/img/2024/sqlite_n_update_10_n_scan_10.svg)
@@ -205,7 +205,7 @@ This test does not show anything of significance compared with what we have alre
 This read-only batched transaction shows:
 
 - `IMMEDIATE` vs `DEFERRED` shows the impact of [Pessimistic concurrency control](https://en.wikipedia.org/wiki/Concurrency_control#Categories) and why you should not default to `IMMEDIATE` for all transactions.
-- `CONCURRENT` vs `DEFERRED` indicates there is not really a downside to using `CONCURRENT` mode as a default for all transactions as it performs the same or slightly better in all cases.
+- `CONCURRENT` vs `IMMEDIATE` indicates there is a slight downside to using `CONCURRENT` mode under heavy load where performs slightly worse in all cases but `CONCURRENT` would be a good default option.
 
 ## Discussion
 
@@ -226,7 +226,7 @@ This chart shows the number of retried transactions per second when executing wi
 
 - These tests perform updates over those ~80k pages so the probability of collision is low. If you reduce the number of rows in the table or change your sampling to something that is skewed like most recent records then the chance of collisions goes up. See [this article](https://sqlite.org/src/doc/begin-concurrent/doc/begin_concurrent.md) for programming notes which advises explicitly against using integer `ROWID` tables to try to reduce data locality issues.
 - Each row should be a maximum of 336 bytes made up of 8 bytes (`INTEGER` is variable-length encoded) + 200 bytes (`BLOB` raw encoding) + 128 bytes (`TEXT` is `UTF-8` encoded). This means that one `4096` byte page will have a maximum of `12` rows (before overhead). Based on this we expect ~80k pages are used to store the 1 million rows.
-- Interestingly, if the number of rows seeded is reduced to `1000` then the time to persist the data is so fast that collisions actually reduce despite the higher probability of a conflict.
+- If the number of rows seeded is reduced to `10000` then collisions are so frequent then performance drops hugely with `CONCURRENT` and `IMMEDIATE` takes a huge lead.
 
 
 ## Run it yourself
