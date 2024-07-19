@@ -243,3 +243,4 @@ Firstly, the absolute numbers here are not the purpose of this exercise. These s
 - https://fly.io/blog/all-in-on-sqlite-litestream/
 - https://kerkour.com/sqlite-for-servers
 - https://simonwillison.net/2022/Oct/23/datasette-gunicorn/#benchmarking-sqlite
+- https://fractaledmind.github.io/2023/12/11/sqlite-on-rails-improving-concurrency/
