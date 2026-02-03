@@ -5,9 +5,11 @@ canonifyurls = true
 languagecode = "en"
 theme = "black-and-light"
 
-pygmentsUseClasses = true
-pygmentsStyle = "default"
-pygmentsCodefences = true
+[markup]
+  [markup.highlight]
+    codeFences = true
+    noClasses = false
+    style = "default"
 
 [params]
   sitename = "reorchestrate"

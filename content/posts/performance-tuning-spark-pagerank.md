@@ -30,38 +30,12 @@ I wanted to include some analysis on data compression as the results were surpri
 
 WikiPedia provides the extracts as GZIP files which can be read by the `SparkContext.textFile()` method out of the box. This is very useful as the `pagelinks` data set is 4.7GB GZIP compressed and over 35GB uncompressed. I do not have the luxury of that much disk space and even if I did I don't really want to store all the raw data as it forces increased disk IO.
 
-<table>
-  <tr>
-    <th>Algorithm</th>
-    <th>Splittable</th>
-    <th>Compressed Size</th>
-    <th>Job Duration</th>
-  </tr>
-  <tr>
-    <td>GZIP</td>
-    <td>No</td>
-    <td>5.78GB</td>
-    <td>2132462 ms (~35 minutes)</td>
-  </tr>
-  <tr>
-    <td>BZIP2</td>
-    <td>Yes</td>
-    <td>4.78GB</td>
-    <td>2926875 ms (~48 minutes)</td>
-  </tr>
-  <tr>
-    <td>Snappy</td>
-    <td>Yes*</td>
-    <td>9.40GB</td>
-    <td>1561278 ms (~26 minutes)</td>
-  </tr>
-  <tr>
-    <td>LZ4</td>
-    <td>Yes</td>
-    <td>9.19GB</td>
-    <td>DNF</td>
-  </tr>
-</table>
+| Algorithm | Splittable | Compressed Size | Job Duration |
+|-----------|------------|-----------------|--------------|
+| GZIP      | No         | 5.78GB          | 2132462 ms (~35 minutes) |
+| BZIP2     | Yes        | 4.78GB          | 2926875 ms (~48 minutes) |
+| Snappy    | Yes*       | 9.40GB          | 1561278 ms (~26 minutes) |
+| LZ4       | Yes        | 9.19GB          | DNF |
 
 #### 1.1. BZIP2
 I have my Spark instance to utilise all 4 threads provided by my CPU (2 executors with 2 threads each). When running GZIP due to it's non-splittable nature I can only see the job being executed as one task on one executor. When running the BZIP2 file which is splittable I can see four tasks being executed in parallel. I assumed that because I was allowing multi-threading the BZIP2 extract would be much faster but based on the result above it seems that the CPU overhead of the BZIP2 compression algorithm is so great that even multithreading cannot overcome it on my hardware.
