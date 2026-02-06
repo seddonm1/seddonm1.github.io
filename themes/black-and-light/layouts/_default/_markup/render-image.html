@@ -1,2 +1,14 @@
-<img src="{{ .Destination | safeURL }}" {{ with .Text }} alt="{{ . }}" {{ end }} {{ with .Title }} title="{{ . }}" {{
-    end }} loading="lazy" />
+{{- $title := .Title -}}
+{{- $class := "" -}}
+{{- if (strings.Contains $title "class=") -}}
+{{- $parts := split $title "class=" -}}
+{{- $title = strings.TrimSpace (index $parts 0) -}}
+{{- $class = index $parts 1 -}}
+{{- end -}}
+<figure {{ with $class }} class="{{ . }}" {{ end }}>
+    <img src="{{ .Destination | safeURL }}" {{ with .Text }} alt="{{ . }}" {{ end }} {{ with $title }} title="{{ . }}"
+        {{ end }} loading="lazy" />
+    {{- if $title -}}
+    <figcaption>{{ $title | markdownify }}</figcaption>
+    {{- end -}}
+</figure>

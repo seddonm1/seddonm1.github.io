@@ -1,0 +1,26 @@
+direction: down
+vars: {
+  d2-config: {
+    layout-engine: elk
+  }
+}
+
+MacOS: {
+  label: "MacOS (Apple Silicon Host)"
+  Docker: {
+    label: "Docker (aarch64 Linux 6.17.8)"
+    QEMU: {
+      label: "QEMU (i386 Emulation)"
+      Wine: {
+        label: "Wine (Windows Layer)"
+        Rust: {
+          label: "Rust Runner & Mock BBS Runtime"
+        }
+        DLL: {
+          label: "WCCMMUD.DLL"
+        }
+        Rust -> DLL: loads
+      }
+    }
+  }
+}

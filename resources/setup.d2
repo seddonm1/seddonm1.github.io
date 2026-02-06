@@ -1,0 +1,39 @@
+direction: right
+vars: {
+  d2-config: {
+    layout-engine: elk
+  }
+}
+
+Generator: "PropTest generates\nrandom entity state" {
+  shape: parallelogram
+}
+
+Setup: {
+  direction: down
+  "Create Runtime" -> "Create entity"
+  "Create entity" -> "DllHarness::from_runtime()"
+
+  Harness: {
+    direction: down
+    label: "DllHarness Setup"
+    "Reflective load DLL" -> "Hook functions\nfor determinism"
+    "Hook functions\nfor determinism" -> "entity.to_wcc_*()\nCOPY"
+  }
+
+  "DllHarness::from_runtime()" -> Harness
+}
+
+Generator -> Setup."Create Runtime"
+
+Outputs: {
+  RE: "Rust Entity" {
+    shape: cylinder
+  }
+  DE: "DLL Entity" {
+    shape: cylinder
+  }
+}
+
+Setup."Create entity" -> Outputs.RE
+Setup.Harness."entity.to_wcc_*()\nCOPY" -> Outputs.DE

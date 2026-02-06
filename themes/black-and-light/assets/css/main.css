@@ -10,13 +10,19 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: Charter, "Bitstream Charter", "Sitka Text", Cambria, "Iowan Old Style", "Palatino Linotype", "URW Palladio L", P052, serif;
   font-size: 17px;
   -webkit-font-smoothing: antialiased;
   line-height: 160%;
   color: #1d1313;
   max-width: 950px;
   margin: auto;
+}
+
+.date,
+time {
+  color: #403c3b;
+  font-size: 13px;
 }
 
 p {
@@ -28,9 +34,58 @@ a img {
 }
 
 img {
-  margin: 10px auto 10px auto;
   max-width: 100%;
   display: block;
+}
+
+figure {
+  display: table;
+  margin: 20px auto;
+}
+
+figcaption {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #666;
+  font-style: italic;
+  text-align: center;
+}
+
+.terminal-frame {
+  border: 10px solid #000;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.callout {
+  margin: 40px 0;
+  padding: 24px 32px;
+  text-align: left;
+  background: #f7f7f7;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-family: Charter, "Bitstream Charter", "Sitka Text", Cambria, "Iowan Old Style", "Palatino Linotype", "URW Palladio L", P052, serif;
+}
+
+.callout-title {
+  font-weight: bold;
+  margin-bottom: 8px;
+  font-size: 1.1em;
+}
+
+.callout p {
+  margin: 0;
+  font-style: normal;
+}
+
+.callout.warning {
+  background: #fffafa;
+  border-color: #f5c6cb;
+}
+
+.callout.tip {
+  background: #f0f8ff;
+  border-color: #bee5eb;
 }
 
 pre,
@@ -150,6 +205,15 @@ blockquote:after {
   content: '\201D';
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Charter, "Bitstream Charter", "Sitka Text", Cambria, "Iowan Old Style", "Palatino Linotype", "URW Palladio L", P052, serif;
+}
+
 hr {
   width: 40%;
   height: 1px;
@@ -169,18 +233,18 @@ h2 {
 
 h3 {
   font-weight: 700;
-  font-size: 22px;
+  font-size: 21px;
   margin-top: 28px;
 }
 
 h4 {
   font-weight: 700;
-  font-size: 20px;
+  font-size: 18px;
   margin-top: 20px;
 }
 
 h5 {
-  font-size: 18px;
+  font-size: 16px;
   margin-top: 18px;
 }
 
@@ -197,13 +261,9 @@ h2 {
   margin-top: 28px;
 }
 
-#sub-header,
-time {
+#sub-header {
   color: #403c3b;
   font-size: 13px;
-}
-
-#sub-header {
   margin: 0 4px;
 }
 
@@ -380,7 +440,19 @@ ul li:before {
     font-size: 22px;
   }
 
-  .posts_listing li div {
+  h3 {
+    font-size: 19px;
+  }
+
+  h4 {
+    font-size: 17px;
+  }
+
+  h5 {
+    font-size: 15px;
+  }
+
+  .date {
     font-size: 12px;
   }
 }
@@ -414,7 +486,19 @@ ul li:before {
     font-size: 18px;
   }
 
-  .posts_listing li div {
+  h3 {
+    font-size: 16px;
+  }
+
+  h4 {
+    font-size: 15px;
+  }
+
+  h5 {
+    font-size: 14px;
+  }
+
+  .date {
     font-size: 12px;
   }
 }

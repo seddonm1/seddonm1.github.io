@@ -1,0 +1,54 @@
+direction: right
+vars: {
+  d2-config: {
+    layout-engine: elk
+  }
+}
+
+Inputs: {
+  RE: "Rust Entity" {
+    shape: cylinder
+  }
+  DE: "DLL Entity" {
+    shape: cylinder
+  }
+}
+
+Paths: {
+  "Rust Path": {
+    "Call function (Rust)"
+  }
+  "DLL Path": {
+    "Call function (DLL)"
+  }
+}
+
+Inputs.RE -> Paths."Rust Path"."Call function (Rust)"
+Inputs.DE -> Paths."DLL Path"."Call function (DLL)"
+
+Compare: {
+  "rust.to_wcc_*() COPY"
+  "harness.get_*()"
+
+  Condition: "equal?" {
+    shape: diamond
+  }
+
+  "rust.to_wcc_*() COPY" -> Condition
+  "harness.get_*()" -> Condition
+}
+
+Paths."Rust Path"."Call function (Rust)" -> Compare."rust.to_wcc_*() COPY"
+Paths."DLL Path"."Call function (DLL)" -> Compare."harness.get_*()"
+
+Results: {
+  PASS: {
+    shape: parallelogram
+  }
+  FAIL: {
+    shape: parallelogram
+  }
+}
+
+Compare.Condition -> Results.PASS: Yes
+Compare.Condition -> Results.FAIL: No

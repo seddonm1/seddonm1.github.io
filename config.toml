@@ -4,6 +4,7 @@ author = "Mike Seddon"
 canonifyurls = true
 languagecode = "en"
 theme = "black-and-light"
+ignoreLogs = ['warning-goldmark-raw-html']
 
 [markup]
   [markup.highlight]
@@ -14,7 +15,3 @@ theme = "black-and-light"
 [params]
   source = "https://github.com/seddonm1/seddonm1.github.io/blob/main/content/posts/"
   dateFormat = "2 January 2006"
-
-[[params.social]]
-  url = "https://github.com/seddonm1"
-  fa_icon = "fa-github"
