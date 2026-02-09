@@ -1,6 +1,6 @@
 ---
 title: "Bringing a jewel-encrusted warhammer to a knife fight"
-date: 2025-02-04
+date: 2026-02-04
 draft: false
 tags: ["development", "rust"]
 ---
@@ -92,10 +92,49 @@ Google's Gemini models (specifically from `flash-2.5` onwards with one million t
 For clarity lets walk through an example loop:
 
 1. Take a target function like `monster_add_cast_spell_to_user` and use the `decompile_function` tool to retrieve the current state of Ghidra's decompiled view of the function.
-1. Use the `function_xref` tool to identify which functions have references *to* `monster_add_cast_spell_to_user` and which functions are referenced *from* `monster_add_cast_spell_to_user`. So, for example, you can see that in the source above `get_player`, and `monster_display_spell_success` are referenced *from* `monster_add_cast_spell_to_user`.
-1. Loop over the referenced functions and `decompile_function` to retreive their decompiled code.
-1. For this example `get_player` is responsible for retreiving a `player` pointer from memory (this is quite obvious from the API calls it uses like `ptrblok`) so we can draw two conclusions from this line of code: `iVar1 = get_player(param_1);`: `iVar1` can be renamed to `player_ptr` and `param_1` is a `player_id`. The `rename_symbol` tool can be called twice to update the Ghidra state.
-1. Now if you call `decompile_function(monster_add_cast_spell_to_user)` again the source code will now return `player_ptr = get_player(player_id);` in that line and, like your IDE, those variables will be renamed throughout the entire function so subsequent lines like `if (*(ushort *)(iVar1 + 0x40 + iVar2 * 2) == param_2)` becomes `if (*(ushort *)(player_ptr + 0x40 + iVar2 * 2) == param_2)` and we immediately know we are doing some operation involving a `player` - hugely informative to make the next renaming decisions.
+2. Use the `function_xref` tool to identify which functions have references *to* `monster_add_cast_spell_to_user` and which functions are referenced *from* `monster_add_cast_spell_to_user`. So, for example, you can see that in the source above `get_player`, and `monster_display_spell_success` are referenced *from* `monster_add_cast_spell_to_user`.
+3. Loop over the referenced functions and `decompile_function` to retreive their decompiled code.
+4. Let's look at `get_player`:
+    ```c
+    /* get_player */
+    
+    undefined4 __cdecl get_player(int param_1)
+    
+    {
+      char *pcVar1;
+      undefined4 uVar2;
+      undefined *puVar3;
+      int iVar4;
+      
+                        /* 0x320d9  201  _get_player */
+      if ((param_1 <= *(int *)_nterms_exref) && (-1 < param_1)) {
+        uVar2 = ptrblok(DAT_0048201c,param_1);
+        return uVar2;
+      }
+      iVar4 = -1;
+      if ((((*(int *)_usrnum_exref < 0) || (*(int *)_nterms_exref <= *(int *)_usrnum_exref)) ||
+          (*(int *)_usaptr_exref == 0)) || (*(int *)_usaptr_exref == 0)) {
+        puVar3 = &DAT_00482aab;
+      }
+      else {
+        puVar3 = *(undefined **)_usaptr_exref;
+      }
+      pcVar1 = (char *)spr(s_get_player:_%d(%d)_(usrnum:_%d_[_00482a86,param_1,
+                          *(undefined4 *)_nterms_exref,*(undefined4 *)_usrnum_exref,puVar3);
+      internal_error(pcVar1,iVar4);
+      return 0;
+    }
+    ```
+  
+    We can infer from the name `get_player` that we are expecting this to take some sort of `player_id` and return a `player`. What conclusions can we draw:
+    
+    - `uVar2 = ptrblok(DAT_0048201c,param_1); return uVar2;`. This means the return value, `uVar2`, is the `player` and it is being assigned with the `ptrblok`. 
+    - Without knowing anything except name `ptrblok` we are infer this is doing something to do with pointers that takes `DAT_0048201c` and the input argument `param_1` (but only if its less than or equal to `_nterms_exref` ) and then returns the `player` result - so its reasonable that `get_player` takes a `player_id` as the input parameter and it is used to index into some memory. You could also infer that `_usrnum_exref` is some sort of maximum players value.
+    - To be sure we can use `xref` tool to see what is reading/writing to `DAT_0048201c`. Sure enough the `allocate_buffers` function has this line `DAT_0048201c = alcblok(*(undefined2 *)_nterms_exref,0x7ec);`. 
+    - This is a goldmine. It says that `DAT_0048201c` is an allocated memory region that contains contains `_nterms_exref` entries of `players` where each player is `0x7ec` (2028) bytes in size.
+
+5. With our new knowledge by investigating `get_player` we can now update the `monster_add_cast_spell_to_user` function: `iVar1` can be renamed to `player_ptr` and `param_1` to `player_id` using the  `rename_symbol` tool.
+6. Now if you call `decompile_function(monster_add_cast_spell_to_user)` again the source code will now return `player_ptr = get_player(player_id);` in that line and, like your IDE, those variables will be renamed throughout the entire function so subsequent lines like `if (*(ushort *)(iVar1 + 0x40 + iVar2 * 2) == param_2)` becomes `if (*(ushort *)(player_ptr + 0x40 + iVar2 * 2) == param_2)` and we immediately know we are doing some operation involving a `player` - hugely informative to make the next renaming decisions.
 
 Now you can have `gemini-cli` run this in a loop and you can see how it will, over time, be able to "peel back the layers" of the original code and produce a more-and-more complete view of the code base.
 

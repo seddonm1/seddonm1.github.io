@@ -47,8 +47,6 @@ oathkeeper credentials generate --alg EdDSA
 
 A value like below will be returned which can be saved as `/etc/config/kratos/jwk.eddsa.json` and accessed via the `Kratos` instance.
 
-The `JWK` can easily to passed into [PostgREST](https://postgrest.org/en/v12/references/configuration.html##jwt-secret) via environment variable `PGRST_JWT_SECRET` or [Hasura](https://hasura.io/docs/latest/auth/authentication/jwt/##configure-hasura-jwt-mode) via `HASURA_GRAPHQL_JWT_SECRET` to allow them to verify the `JWT`.
-
 ```json
 {
   "keys": [
@@ -64,6 +62,9 @@ The `JWK` can easily to passed into [PostgREST](https://postgrest.org/en/v12/ref
   ]
 }
 ```
+
+The `JWK` can easily to passed into [PostgREST](https://postgrest.org/en/v12/references/configuration.html##jwt-secret) via environment variable `PGRST_JWT_SECRET` or [Hasura](https://hasura.io/docs/latest/auth/authentication/jwt/##configure-hasura-jwt-mode) via `HASURA_GRAPHQL_JWT_SECRET` to allow them to verify the `JWT`.
+
 
 ## claims_mapper_url
 
