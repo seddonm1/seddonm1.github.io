@@ -129,7 +129,7 @@ For clarity lets walk through an example loop:
     We can infer from the name `get_player` that we are expecting this to take some sort of `player_id` and return a `player`. What conclusions can we draw:
     
     - `uVar2 = ptrblok(DAT_0048201c,param_1); return uVar2;`. This means the return value, `uVar2`, is the `player` and it is being assigned with the `ptrblok`. 
-    - Without knowing anything except name `ptrblok` we are infer this is doing something to do with pointers that takes `DAT_0048201c` and the input argument `param_1` (but only if its less than or equal to `_nterms_exref` ) and then returns the `player` result - so its reasonable that `get_player` takes a `player_id` as the input parameter and it is used to index into some memory. You could also infer that `_usrnum_exref` is some sort of maximum players value.
+    - Without knowing anything except name `ptrblok` we can infer this is doing something to do with pointers that takes `DAT_0048201c` and the input argument `param_1` (but only if its less than or equal to `_nterms_exref` ) and then returns the `player` result - so its reasonable that `get_player` takes a `player_id` as the input parameter and it is used to index into some memory. You can also infer that `_usrnum_exref` is some sort of maximum players value.
     - To be sure we can use `xref` tool to see what is reading/writing to `DAT_0048201c`. Sure enough the `allocate_buffers` function has this line `DAT_0048201c = alcblok(*(undefined2 *)_nterms_exref,0x7ec);`. 
     - This is a goldmine. It says that `DAT_0048201c` is an allocated memory region that contains contains `_nterms_exref` entries of `players` where each player is `0x7ec` (2028) bytes in size.
 
