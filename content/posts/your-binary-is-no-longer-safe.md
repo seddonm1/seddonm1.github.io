@@ -1,11 +1,14 @@
 ---
-title: "Bringing a jewel-encrusted warhammer to a knife fight"
+title: "Your binary is no longer safe"
 date: 2026-02-04
 draft: false
 tags: ["development", "rust"]
+aliases: ["bringing-a-warhammer-to-a-knife-fight"]
 ---
 
-This post is about the brute-force reverse engineering of an old [Multi-user Dungeon](https://en.wikipedia.org/wiki/Multi-user_dungeon) (MUD), using modern [Large Language Models](https://en.wikipedia.org/wiki/Large_language_model) (LLMs) to automate this painstaking process. While the choice of a MUD codebase is arbitrary (explained below), the approach applies equally well to other tasks, such as converting legacy `COBOL` to a modern language.
+This post is about the brute-force reverse engineering of binary (compiled) programs using [Large Language Models](https://en.wikipedia.org/wiki/Large_language_model) (LLMs) to automate this two-part problem: decompilation and conversion to a modern programming language. 
+
+In this post an old [Multi-user Dungeon](https://en.wikipedia.org/wiki/Multi-user_dungeon) (MUD) game binary has been targeted (see the reasoning below) but the approach applies equally well to other tasks, such as modernizing binaries or converting legacy `COBOL` to a modern language.
 
 There are two reasons that LLMs should be good at this process, given their lineage:
 
