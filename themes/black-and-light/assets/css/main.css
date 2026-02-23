@@ -88,8 +88,19 @@ figcaption {
 }
 
 .callout p {
-    margin: 0;
+    margin: 20px 0;
     font-style: normal;
+}
+
+.callout p:first-child {
+    margin-top: 0;
+}
+
+.callout code {
+    background-color: transparent;
+    padding: 2px 4px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
 }
 
 .callout.warning {
