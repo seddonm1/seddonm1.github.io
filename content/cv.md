@@ -14,7 +14,7 @@ Greater Sydney Area
 *   **Personal Website:** [reorchestrate.com](http://reorchestrate.com)
 
 ## Summary
-Experienced hands-on Principal Engineer and Solutions Architect with deep expertise in Generative AI, GPU-accelerated computing, and large-scale data platforms. Proven track record delivering ML/AI systems end-to-end including LLM integration, RAG implementations, agentic AI workflows, and high-performance GPU inference on NVIDIA hardware, deploying Rust and Python systems into production. Strong background in partner and stakeholder enablement through consulting, workshops, and technical community talks. Extensive direct experience across AWS, GCP, and Azure with a wide range of ML frameworks and programming languages.
+Experienced hands-on Principal Engineer and Solutions Architect with deep expertise in Generative AI, GPU-accelerated computing, and large-scale data platforms. Proven track record delivering ML/AI systems end-to-end including LLM integration, RAG implementations, and agentic AI workflows, having deployed high-performance GPU inference on NVIDIA hardware in Rust and Python. Strong background in partner and stakeholder enablement through consulting, workshops, and technical community talks. Extensive direct experience across AWS, GCP, and Azure with a wide range of ML frameworks and programming languages.
 
 ## Top Skills
 *   Generative AI / LLMs / RAG
@@ -46,7 +46,7 @@ Experienced hands-on Principal Engineer and Solutions Architect with deep expert
 *Sydney, New South Wales, Australia*
 
 *   Full rewrite from a GraphQL/Azure Functions to an extremely simple single-container REST service (with OpenAPI specification) backed by Postgres in Typescript. 
-*   Achieved transaction guarantees by using the active record pattern and Graphile worker queues. 
+*   Achieved transaction guarantees by using the active record pattern and implementation of async Graphile worker queues. 
 *   Heavily use of code generation from API specifications to create type-safe clients including from the Truyu mobile application.
 
 ### VisualCortex
@@ -54,8 +54,8 @@ Experienced hands-on Principal Engineer and Solutions Architect with deep expert
 *April 2021 – March 2024 (3 years)*
 *Sydney, New South Wales, Australia*
 
-*   Owned the end-to-end ML pipeline as an NVIDIA partner: data collection, labelling, PyTorch model training, evaluation, and production deployment on NVIDIA GPUs exclusively.
-*   Built a high-performance inference framework in Rust (migrated from Python) using NVIDIA DeepStream/GStreamer to maximise GPU utilisation. The framework processed tens-of-billions of frames in production with a heavy focus on efficient inference.
+*   Owned the end-to-end ML pipeline as an NVIDIA partner: data collection, labelling, PyTorch model training, evaluation, and production deployment on NVIDIA GPUs exclusively (from Jetson to T4/A100).
+*   Built a high-performance inference framework in Rust (migrated from Python) using NVIDIA DeepStream/GStreamer to maximise GPU utilisation. The framework processed tens-of-billions of frames in production with a heavy focus on efficient inference and maximum throughput.
 *   Managed and coached a small team of developers on model building and production deployment.
 
 ### One Mount Group
