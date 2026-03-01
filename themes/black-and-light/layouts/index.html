@@ -2,7 +2,7 @@
 
 <section id="content">
   <ul class="posts_listing">
-    {{ range .Site.RegularPages.ByPublishDate.Reverse }}
+    {{ range where .Site.RegularPages.ByPublishDate.Reverse "Section" "posts" }}
     <li>
       <h2>
         <a href="{{ .Permalink }}">{{ .Title }}</a>
