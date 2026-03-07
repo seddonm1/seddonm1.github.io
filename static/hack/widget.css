@@ -1,0 +1,135 @@
+.hack-runner {
+    margin-top: 1.4rem;
+}
+
+.hack-runner-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.1rem;
+}
+
+.hack-runner-panel {
+    min-height: clamp(520px, 72vh, 860px);
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background: #fafafa;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.hack-runner-title {
+    padding: 0.65rem 0.8rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    border-bottom: 1px solid #e0e0e0;
+    color: #403c3b;
+}
+
+.hack-runner-source,
+.hack-runner-result {
+    width: 100%;
+    min-height: clamp(460px, 66vh, 780px);
+    flex: 1;
+    margin: 0;
+    border: 0;
+    padding: 0.8rem;
+    font-family:
+        Menlo, Monaco, "Andale Mono", "Lucida Console", "Courier New", monospace;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    color: #172233;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+.hack-runner-source {
+    background: #ffffff;
+    outline: none;
+    padding-left: 3px;
+}
+
+.hack-runner-panel .codejar-wrap {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.hack-runner-panel .codejar-linenumbers-inner-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    overflow: hidden;
+    border-right: 1px solid #d8dee6;
+}
+
+.hack-runner-panel .codejar-linenumbers {
+    height: 100%;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    user-select: none;
+    mix-blend-mode: initial;
+    box-sizing: border-box;
+    padding-right: 2px;
+}
+
+.hack-runner-panel .codejar-linenumber {
+    position: relative;
+    top: 0;
+}
+
+.hack-runner-source:focus {
+    box-shadow: inset 0 0 0 1px #c7d2de;
+}
+
+.hack-token-comment {
+    color: #586274;
+    font-style: italic;
+}
+
+.hack-token-label {
+    color: #8a3f08;
+    font-weight: 700;
+}
+
+.hack-token-a {
+    color: #0047d4;
+    font-weight: 700;
+}
+
+.hack-token-number {
+    color: #7f1d9e;
+    font-weight: 700;
+}
+
+.hack-token-dest {
+    color: #0b7f3a;
+    font-weight: 700;
+}
+
+.hack-token-jump {
+    color: #c21f1f;
+    font-weight: 700;
+}
+
+.hack-runner-result {
+    white-space: pre-wrap;
+    background: #f2f6fa;
+}
+
+.hack-runner-result-panel[data-hack-kind="ok"] .hack-runner-result {
+    background: #e8f6ef;
+}
+
+.hack-runner-result-panel[data-hack-kind="error"] .hack-runner-result {
+    background: #fdeceb;
+    color: #af2a1c;
+}
+
+@media (max-width: 900px) {
+    .hack-runner-grid {
+        grid-template-columns: 1fr;
+    }
+}
